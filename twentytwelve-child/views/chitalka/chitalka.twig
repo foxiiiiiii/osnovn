@@ -1,0 +1,204 @@
+<div class="center-block site-content-right" xmlns:v-on="http://www.w3.org/1999/xhtml">
+    <div class="breadcrumbs">
+        {{ breadcrumbs }}
+    </div>
+    <main role="main">
+        <h1>Поиск</h1>
+
+{#                <pre>#}
+{#                    {{ vm.Articles | print_r }}#}
+{#                </pre>#}
+
+        <form class="chitalka-search" action="{{ action }}" method="post">
+            <div id="readapp">
+                <div class="chitalka-search-bl1">
+                    <div>
+                        <div class="chitalka-search-god">
+                            <div class="title-poisk">Год</div>
+                            <select class="form-control" name="year">
+                                {% for year in vm.Years %}
+                                    <option {% if year == vm.Selected.year %} selected {% endif %}>{{ year }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        {% if vm.Type != 3 %}
+                            <div class="chitalka-search-nomer">
+                                <div class="title-poisk">Номер</div>
+                                <select class="form-control" name="mag_num">
+                                    <option value="0">Все</option>
+                                    {% for magazine in vm.Items %}
+                                        <option
+                                                value="{{ magazine.ID }}" {% if magazine.ID == vm.Selected.mag_num %} selected {% endif %}>{{ magazine.title }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        {% endif %}
+
+                        <div class="chitalka-search-dostup">
+                            <div class="form-check">
+                                <input type="checkbox"
+                                       class="form-check-input" name="onlyFree" value=""
+                                       {% if vm.Selected.onlyFree == '1' %}checked{% endif %}>
+                                <label class="form-check-label" for="exampleCheck1">В свободном доступе</label>
+                            </div>
+                        </div>
+
+                        <div class="chitalka-search-dostup">
+                            <label>
+                                <input type="radio" name="entitytype" value="1" {% if vm.Type == 1 %}checked{% endif %}>
+                            </label> Журналы
+                            <label>
+                                <input type="radio" name="entitytype" value="2" {% if vm.Type == 2 %}checked{% endif %}
+                                       style="margin-left: 20px">
+                            </label> Бюллетени
+                            <label>
+                                <input type="radio" name="entitytype" value="3" {% if vm.Type == 3 %}checked{% endif %}
+                                       style="margin-left: 20px">
+                            </label> В обоих
+                            {#                            <label> #}
+                            {#                                <input type="radio" name="magbull" style="margin-left: 20px"> #}
+                            {#                            </label> Везде #}
+                        </div>
+
+                    </div>
+
+                    {% if vm.Type != 3 %}
+                        <div class="chitalka-search-rubrikator">
+                            <div class="title-poisk">Рубрикатор</div>
+                            <select class="form-control input-sm" name="section">
+                                <option>Все</option>
+                                {% for section in vm.Sections %}
+                                    <option
+                                            value="{{ section.term_id }}" {% if section.term_id == vm.Selected.section %} selected {% endif %}>{{ section.name }}</option>
+                                    {% if section.children %}
+                                        {% for child in section.children %}
+                                            <option value="{{ child.term_id }}" {% if child.term_id == vm.Selected.section %} selected {% endif %}>
+                                                -- {{ child.name }}</option>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                    {% endif %}
+
+
+                    <div class="chitalka-search-poisk">
+                        <div class="title-poisk">Поиск в архиве</div>
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="search_text"
+                                   value="{{ vm.Selected.search_text }}">
+                            <span class="input-group-btn">
+        							<button type="submit" class="btn btn-default">Искать</button>
+                        </span>
+                        </div>
+                    </div>
+                    {% if vm.Type == 1 %}
+                        <div style="margin-top: 5px">
+                            <a href="/formy-dokumentov/">Поиск по формам документов</a>
+                            <a href="/normativnye-dokumenty/">Поиск по нормативным документам</a>
+                        </div>
+                    {% endif %}
+
+                </div>
+                <input type="hidden" name="action" value="read_search">
+                <input type="hidden" name="typechanged" value="0">
+                <input type="hidden" name="back_addr" value="{{ back_addr }}">
+            </div>
+
+        </form>
+        <form action="{{ clear_action }}" method="post">
+            <input type="hidden" name="action" value="clear_read">
+            <input type="hidden" name="back_addr" value="{{ back_addr }}">
+            <button type="submit" class="btn btn-default clear-param">Очистить параметры</button>
+        </form>
+
+        {% if vm.InSearch %}
+            <ul class="chitalka-stati">
+
+                {% for article in vm.Articles %}
+                    <li>{% if article.post_type == 'news' %}
+                            <a href="/news/{{ article.slug }}" class="stati-link">{{ article.title }}</a> <span
+                                    class="stati-date">{{ article.post_date|date("d.m.Y") }}</span>
+                            <a href="/news/" class="stati-nomer">новости</a>
+                        {% elseif article.post_type == 'bulletinsarticle' %}
+                            <a href="/barticles/{{ article.slug }}" class="stati-link">{{ article.title }}</a> <span
+                                class="stati-date">{{ article.post_date|date("d.m.Y") }}</span>
+                            {% if article.bart_searchtext %}
+                                <a href="/bulletins/{{ article.custom.magazine.slug }}"
+                                   class="stati-nomer">{{ article.bart_searchtext }}</a>
+                            {% else %}
+                                <a href="/bulletins/{{ article.custom.magazine.slug }}"
+                                   class="stati-nomer">{{ article.custom.magazine.title }}</a>
+                            {% endif %}
+                        {% elseif article.post_type == 'article' %}
+                            <a href="/articles/{{ article.slug }}" class="stati-link">{{ article.title }}</a> <span
+                                class="stati-date">{{ article.post_date|date("d.m.Y") }}</span>
+                            {% if article.art_searchtext %}
+                                <a href="/magazines/{{ article.custom.magazine.slug }}"
+                                   class="stati-nomer">{{ article.art_searchtext }}</a>
+                            {% else %}
+                                <a href="/magazines/{{ article.custom.magazine.slug }}"
+                                   class="stati-nomer">{{ article.custom.magazine.title }}</a>
+                            {% endif %}
+                        {% else %}
+                            <a href="/articles/{{ article.slug }}" class="stati-link">{{ article.title }}</a> <span
+                                class="stati-date">{{ article.post_date|date("d.m.Y") }}</span>
+                            {% if article.art_searchtext %}
+                                <a href="/magazines/{{ article.custom.magazine.slug }}"
+                                   class="stati-nomer">{{ article.art_searchtext }}</a>
+                            {% else %}
+                                <a href="/magazines/{{ article.custom.magazine.slug }}"
+                                   class="stati-nomer">{{ article.custom.magazine.title }}</a>
+                            {% endif %}
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {% include 'part/sections.twig' %}
+        {% endif %}
+
+        {% if vm.Articles %}
+            <div class="chitalka-search-bl2">
+                <div class="chitalka-search-pokaz">Показаны:
+                    {% set firstFound = false %}
+                    {% for page in vm.Pagination.pages %}
+                        {% if page.class == "dots" %}
+                            {{ page.title }}
+                            {% if pag.prev %}
+                                {% if firstFound != true %}
+                                    <a href="{{ page.link }}">[<<]</a>
+                                    {% set firstFound = true %}
+                                {% else %}
+                                    <a href="{{ page.link }}">[>>]</a>
+                                {% endif %}
+                            {% endif %}
+                        {% else %}
+                            {% if page.current %}
+                                [{{ (page.title * 30 - 30) + 1 }} - {{ (page.title * 30) }}]
+                            {% else %}
+                                <a href="{{ page.link }}">[{{ (page.title * 30 - 30) + 1 }} - {{ (page.title * 30) }}
+                                    ]</a>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="chitalka-search-vsego">Всего статей: {{ vm.Total }}
+                </div>
+            </div>
+        {% else %}
+            {% if vm.Pagination %}
+                <div class="chitalka-search-bl2">
+                    <div class="chitalka-search-pokaz">
+                        По вашему запросу ничего не найдено
+                    </div>
+                </div>
+            {% endif %}
+        {% endif %}
+
+        <br><br>
+
+
+    </main>
+</div>

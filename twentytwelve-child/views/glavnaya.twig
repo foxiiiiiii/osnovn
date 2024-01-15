@@ -1,0 +1,88 @@
+
+
+<div class="last-journal">
+<form class="last-serch" action="/wp-admin/admin-post.php" method="post">
+<input type="text" name="search_text" value="" placeholder="Введите ваш поисковый запрос" style="outline: none;">
+<input type="hidden" name="action" value="read_search">
+<input type="hidden" name="back_addr" value="/search/">
+<button type="submit">
+Искать на сайте
+</button>
+</form>
+</div>
+
+
+    <main role="main">
+        <h1>Журнал «АБ-Экспресс»</h1>
+        <div class="static-content">
+            {{ page.content }}
+        </div>
+
+
+<!--
+        <div class="last-number-main">
+            <h2>Номер № {{ last.current_number }} <span>({{ last.title }})</span></h2>
+
+            {% if main %}
+                <div class="statya-nomera">
+
+                    <h3>Важно знать</h3>
+                    {% if main.thumbnail %}
+                        <a href="{{ main.link }}" title="{{ main.title }}"><img src="{{ main.thumbnail.src|resize(400, 250) }}" alt="{{ main.title }}"></a>
+                    {% endif %}
+                    <a class="statya-nomera-title" href="{{ main.link }}">{{ main.title }}</a>
+                    <p>{{ main.content | raw | truncate(30) }}</p>
+                </div>
+            {% endif %}
+
+            {% if imparticles %}
+                <div class="vazhnie-statyi">
+                    <ul>
+                        {% for article in imparticles %}
+                            <li><a href="{{ article.link }}">{{ article.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <div class="ostalnie-statyi">
+                {% if imparticles %}
+
+                {% endif %}
+
+                <ul>
+                    {% for article in articles %}
+                        <li><a href="{{ article.link }}">{{ article.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+-->
+        <div class="news-online-main">
+            <h2>Новости онлайн</h2>
+            {% include "part/newslist.twig" with {'news': news, 'fns': false} %}
+            <a href="/news/" class="main-news-next">Другие новости</a>
+        </div>
+    </main>
+
+<div class="podp-reg"><a href="/podpiska-na-zhurnal/">Оформить подписку</a></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

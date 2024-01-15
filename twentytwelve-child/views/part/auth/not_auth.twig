@@ -1,0 +1,53 @@
+{# {% if not only_form %}
+	<div class="reg-enter">
+		<p>Данный раздел/документ открыт только зарегистрированным пользователям.<br>
+			<a href="/podpiska-na-zhurnal/">Оформите подписку</a>
+			или
+									        войдите под вашей учетной записью</p>
+	</div>
+{% endif %}
+{% if not lock_info %}
+	{% if not only_form %}
+		<h3 class="enter-reg">Вход для зарегистрированных пользователей</h3>
+		<div class="autorization autorization-center">
+		{% endif %}
+		{% if auth_login %}
+			<style>
+				.auth-login__error {
+					display: block;
+					text-align: center;
+					color: red;
+				}
+			</style>
+			<span class="auth-login__error">{{ auth_login }}</span>
+		{% endif %}
+		<form action="{{ action_addr }}" method="post">
+			<div class="form-group">
+				<input type="text" class="form-control" id="user_login" name="user_login" placeholder="Эл.почта">
+			</div>
+			<div class="form-group">
+				<input type="password" class="form-control" id="user_pass" name="user_pass" placeholder="Пароль">
+			</div>
+			<input type="hidden" name="action" value="userlogin">
+			<button type="submit">Войти</button>
+		</form>
+		{% if not only_form %}
+		</div>
+		<div class="after-reg">
+
+			<h4>Уважаемые посетители!</h4>
+
+			После регистрации на нашем сайте вам будут доступны следующие сервисы:
+
+			<ul>
+				<li>Возможность просматривать эксклюзивные материалы журнала, которые нигде не публиковались;</li>
+				<li>Возможность просматривать материалы журнала до появления бумажной версии;</li>
+				<li>Возможность подписки на новости.</li>
+			</ul>
+
+		</div>
+	{% endif %}
+{% endif %} #}
+
+<h1>TEST</h1>
+{{ function('do_shortcode', '[authentication]') }}

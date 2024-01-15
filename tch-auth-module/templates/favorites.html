@@ -1,0 +1,165 @@
+<div id="favorites_add_block" v-cloak>
+
+  <a href="#" class="btn btn-default btn-sm izb-article" @click="addToFavorites">
+
+    <img :src="favoritesImage" alt="Добавить в избранное" title="Добавить в избранное">
+
+    Добавить в избранное
+
+  </a>
+
+</div>
+
+
+
+<script>
+
+document.addEventListener("DOMContentLoaded", (event) => {
+
+  const path = window.location.pathname;
+
+
+
+  const { h } = window.Vue;
+
+  const App = {
+
+    data: () => ({
+
+      articleId: document.getElementById('article_id').value,
+
+      articles: [],
+
+      state: null,
+
+      loading: true
+
+    }),
+
+    watch: {
+
+      '$store.state.authed' : function(val) {
+
+        this.articles = this.$store.state.user.favorites;
+
+        this.loading = false
+
+        this.detectorFavorites()
+
+      }
+
+    },
+
+    computed: {
+
+      favoritesImage() {
+
+        if(typeof this.state != 'null') {
+
+          if(!this.loading) {
+
+            if (this.state) return '/wp-content/themes/twentytwelve-child/images/fav.png';
+
+            return '/wp-content/themes/twentytwelve-child/images/fav_empty.png'
+
+          }
+
+
+
+          return '/wp-content/plugins/tch-auth-module/res/loading.svg';
+
+        }
+
+      }
+
+    },
+
+    methods: {
+
+      async addToFavorites(e) {
+
+        e.preventDefault();
+
+        try {
+
+          this.loading = true;
+
+          const data = {
+
+            articleId: this.articleId
+
+          }
+
+          const res = await req.post('favorites/add', data);
+
+          // console.log(res.data);
+
+          this.articles = res.data.articles;
+
+          this.detectorFavorites();
+
+          this.loading = false;
+
+        } catch (e) {
+
+          console.log(e);
+
+        }
+
+      },
+
+      detectorFavorites() {
+
+        if (this.articles.includes(this.articleId)) {
+
+          this.state = true
+
+        } else {
+
+          this.state = false;
+
+        }
+
+      }
+
+    }
+
+  }
+
+
+
+  const app = Vue.createApp(App)
+
+  app.use(store);
+
+  app.mount('#favorites_add_block')
+
+})
+
+
+
+</script>
+
+<!-- {# /wp-content/themes/twentytwelve-child/images/fav_empty.png #}
+
+{# /wp-content/themes/twentytwelve-child/images/fav.png #} -->
+
+
+
+<style>
+
+  html {
+
+    overflow: visible !important;
+
+  }
+
+  #favorites_add_block a {
+
+    box-shadow: 4px 4px 22px 0px rgba(50, 50, 50, 0.31);
+
+    color: #000;
+
+  }
+
+</style>

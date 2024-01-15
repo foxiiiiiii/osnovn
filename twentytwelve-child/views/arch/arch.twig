@@ -1,0 +1,62 @@
+<div id="primary" class="site-content center-block">
+    <div class="breadcrumbs">{{ breadcrumbs }}</div>
+    <div id="content" role="main">
+        <h1>Архив номеров</h1>
+        <div class="static-content">
+            {{ page.content }}
+        </div>
+
+        <form class="chitalka-search" action="{{ action }}" method="post" name="read_search_form">
+                <div class="chitalka-search-poisk poisk-arch">
+                    <div class="title-poisk">Поиск в архиве</div>
+                    <div class="input-group">
+                        <input type="text" class="form-control" name="search_text">
+
+                        <span class="input-group-btn">
+        							<button type="submit" class="btn btn-default">Искать</button>
+                        </span>
+                    </div>
+                </div>
+            <input type="hidden" name="action" value="read_search">
+            <input type="hidden" name="year" value="{{ arch.year }}">
+            <input type="hidden" name="back_addr" value="/read">
+        </form>
+        <div style="display: none">
+            <form class="chitalka-search" action="{{ action }}" method="post" name="arch_filter">
+                <input type="hidden" name="action" value="arch_search">
+                <input type="hidden" name="arch_year" value="{{ arch.year }}">
+                <input type="hidden" name="back_addr" value="{{ back_addr }}">
+                <button type="submit">year</button>
+            </form>
+        </div>
+
+        <div class="sort-years">
+            {% for year in years %}
+                {% if year == arch.year %}
+                    <span>{{ year }}</span>
+                {% else %}
+                    <a href="/arch/{{ year }}" class="year_lnk">{{ year }}</a>
+                {% endif %}
+                {% if (not loop.first) or (not loop.last) %}
+                    |
+                {% endif %}
+            {% endfor %}
+        </div>
+
+        {% for magazine in magazines %}
+            <div class="arch-journal">
+                <div class="arch-journal-one">
+                    <a href="{{ magazine.link }}" class="arch-journal-number">«{% if magazine.tr_mag_prefix %}{{ magazine.tr_mag_prefix }}{% else %}АБ-Экспресс{% endif%}» {{ magazine.title }}</a>
+                    <div class="art_list">
+                        <ul>
+                            {% for article in magazine.custom.articles %}
+                                <li><a href="{{ article.link }}">{{ article.title }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+
+    </div><!-- #content -->
+</div><!-- #primary -->

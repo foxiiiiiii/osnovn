@@ -1,0 +1,25 @@
+<h1>{{ post.title }}</h1>
+
+{% if subpages %}
+	<ul class="page-sections">
+		{% for page in subpages %}
+			<li>
+				<a href="{{ page.link }}">{{ page.subpage.post_title }}</a>
+			</li>
+		{% endfor %}
+	</ul>
+{% endif %}
+
+<div class="static-content">
+	{% if not limitation %}
+		{{ post.content }}
+	{% elseif  ronly == '1' and not logged %}
+		{% include 'part/auth/not_auth.twig' %}
+	{% else %}
+		{{ post.content }}
+		{% if form %}
+			{% include ['part/forms/'~form~'.twig'] %}
+		{% endif %}
+	{% endif %}
+
+</div>

@@ -1,0 +1,60 @@
+<div id="primary" class="center-block site-content-right">
+    <div class="breadcrumbs">{{ breadcrumbs }}</div>
+    <div id="content" role="main">
+        <h1>{{ section.name }}</h1>
+    
+        {% if subsections %}
+            <ul class="page-sections">
+                {% for sect in subsections %}
+                    <li>
+                        <a href="/section/{{ section.slug }}/{{ sect.slug }}">{{ sect.name }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <ul class="chitalka-stati">
+                
+                {% for post in posts_result.Posts %}
+                    <li><a href="/articles/{{ post.slug }}" class="stati-link">{{ post.title }}</a> <span
+                            class="stati-date">{{ post.post_date|date("d.m.Y") }}</span>
+                        {% if post.custom.art_links != 0 %}
+                        <a href="/magazines/{{ post.custom.magazine.slug }}"
+                           class="stati-nomer">{{ post.custom.magazine.title }}</a>
+                        {% endif %}
+                    </li>
+        
+                {% endfor %}
+    
+            </ul>
+    
+            <div class="chitalka-search-bl2">
+                {% if posts_result.Pagination.pages %}
+                    <div class="chitalka-search-pokaz">Показаны:
+                        {% set firstFound = false %}
+                        {% for page in posts_result.Pagination.pages %}
+                            {% if page.class == "dots" %}
+                                {{ page.title }}
+                                {% if posts_result.Pagination.prev %}
+                                    {% if firstFound != true %}
+                                        <a href="{{ page.link }}">[<<]</a>
+                                        {% set firstFound = true %}
+                                    {% else %}
+                                        <a href="{{ page.link }}">[>>]</a>
+                                    {% endif %}
+                                {% endif %}
+                            {% else %}
+                                {% if page.current %}
+                                    [{{ (page.title * 30 - 30) + 1 }} - {{ (page.title * 30) }}]
+                                {% else %}
+                                    <a href="{{ page.link }}">[{{ (page.title * 30 - 30) + 1 }} - {{ (page.title * 30) }}]</a>
+                                {% endif %}
+                            {% endif %}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                <div class="chitalka-search-vsego">Всего статей: {{ posts_result.Total }}
+                </div>
+            </div>
+        {% endif %}
+    </div><!-- #content -->
+</div><!-- #primary -->

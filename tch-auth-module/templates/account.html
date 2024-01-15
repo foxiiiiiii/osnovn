@@ -1,0 +1,765 @@
+<div id="account" v-cloak>
+  <!-- <pre>
+    {{$store.state.user}}
+  </pre>
+  <pre>
+    {{getReaded}}
+  </pre> -->
+  <n-config-provider :locale="locale.ruRU" :date-locale="locale.dateRuRU" :theme-overrides="theme">
+    <div class="account_content" v-if="!$store.state.loading">
+      <div class="left_menu">
+        <n-menu 
+          :options="menuOptions" 
+          v-model:value="currentOption"
+          @update:value="updateOption"></n-menu>
+      </div>
+      <div class="main_content">
+        <n-alert
+          :title="getUserSubscribeAccess?.title"
+          :type="getUserSubscribeAccess.type"
+          v-if="!$store.state.loading && currentOption === 'profile'"
+          :style="{marginBottom: '25px'}">
+          <div v-html="getUserSubscribeAccess.text"></div>
+        </n-alert>
+        
+        <template v-if="currentOption === 'profile'">
+          
+          <n-form>
+            <n-form-item
+              v-for="(item, index) in profileData"
+              size="large"
+              :label="item[1].label">
+              <n-input :value="item[1].value" :disabled="!item[1].editable" :class="{'pointer-none': item[1].editable}">
+                <template #prefix>
+                  <i :class="item[1].icon"></i>
+                </template>
+
+                <template #suffix v-if="item[1].editable">
+                  <n-button 
+                    @click="editPorfileDate(item[0], item[1].value)"
+                    quaternary 
+                    type="info" 
+                    size="small" 
+                    icon-placement="left" 
+                    round>
+                    Изменить
+                    <template #icon>
+                      <i class="ph ph-pencil-simple"></i>
+                    </template>
+                  </n-button>
+                </template>
+              </n-input>
+
+              <template #feedback v-if="!item[1].editable">
+                Доступ к редактированию имеет только администрация сайта
+              </template>
+            </n-form-item>
+          </n-form>
+
+        </template>
+        <template v-if="currentOption === 'security'">
+          <n-form class="security">
+            <n-form-item 
+              label="Текущий пароль"
+              size="large"
+              :feedback="securityDataFeedbacks.old_password.text" 
+              :validation-status="securityDataFeedbacks.old_password.status">
+              
+              <n-input 
+                type="password"
+                show-password-on="click"
+                v-model:value="securityData.old_password"
+                placeholder="">
+                <template #prefix>
+                  <i class="ph ph-lock-open"></i>
+                </template>
+              </n-input>
+            </n-form-item>
+
+            <n-form-item 
+              label="Новый пароль"
+              size="large"
+              :feedback="securityDataFeedbacks.new_password.text" 
+              :validation-status="securityDataFeedbacks.new_password.status">
+              
+              <n-input 
+                type="password"
+                show-password-on="click"
+                v-model:value="securityData.new_password"
+                placeholder="">
+                <template #prefix>
+                  <i class="ph ph-lock"></i>
+                </template>
+              </n-input>
+            </n-form-item>
+
+            <n-form-item 
+              label="Повторите новый пароль"
+              size="large"
+              :feedback="securityDataFeedbacks.new_password_repeat.text" 
+              :validation-status="securityDataFeedbacks.new_password_repeat.status">
+              
+              <n-input 
+                type="password"
+                show-password-on="click"
+                v-model:value="securityData.new_password_repeat"
+                placeholder="">
+                <template #prefix>
+                  <i class="ph ph-lock"></i>
+                </template>
+              </n-input>
+            </n-form-item>
+
+            <n-button 
+              size="large" 
+              type="info" 
+              @click="onChangePassword"
+              :loading="securityData.loading">Подтвердить</n-button>
+          </n-form>
+        </template>
+        <template v-if="currentOption === 'news'">
+          <n-list v-for="(group, index) in notificationsPosts" clickable hoverable>
+            <template #header>
+              {{group.label}}
+            </template>
+            <n-list-item v-for="post in group.subposts" @click="openPost(post.link)">
+              <template #suffix>
+                {{showTime(post.datetime)}}
+              </template>
+              <n-thing :title="post.name">
+              </n-thing>
+            </n-list-item>
+            <div :style="{height: '25px'}" v-if="index != (notificationsPosts.length - 1)"></div>
+          </n-list>
+        </template>
+        <template v-if="currentOption === 'favorites'">
+          <n-alert
+            title="Статьи отсутствуют"
+            type="info"
+            v-if="$store.state.user.favArticles.length == 0">
+            Сначала добавьте статьи в избранное.
+          </n-alert>
+          <n-list clickable hoverable v-else>
+            <n-list-item v-for="(post, index) in $store.state.user.favArticles" >
+              <template #suffix>
+                <n-button quaternary circle type="error" @click="onRemoveFromFav(post.id)"> 
+                  <template #icon>
+                    <i class="ph ph-trash" v-if="!post.loading"></i>
+                    <img v-else src="/wp-content/plugins/tch-auth-module/res/loading.svg" alt="" width="18" height="18">
+                  </template>
+                </n-button>
+              </template>
+              <n-thing :title="post.title" :description="post.parent" @click="openPost(post.link)">
+              </n-thing>
+            </n-list-item>
+            <div :style="{height: '25px'}" v-if="index != ($store.state.user.favArticles.length - 1)"></div>
+          </n-list>
+        </template>
+      </div>
+    </div>
+    <div class="account_content" v-else>
+      <div class="left_menu">
+        <n-space vertical>
+          <n-skeleton height="42px" width="100%" :sharp="false" v-for="n in 5" />
+        </n-space>
+      </div>
+      <div class="main_content">
+        <div :style="{marginBottom: '25px'}">
+          <n-skeleton height="70px" width="100%" :sharp="false"  />
+        </div>
+        <n-space vertical>
+          <n-skeleton 
+            :height="n % 2 ? '25px' : '40px'" 
+            :width="n % 2 ? '75px' : '100%'" 
+            :sharp="false" 
+            :round="n % 2 ? true : false"
+            v-for="n in 8" />
+        </n-space>
+      </div>
+
+      
+    </div>
+
+    <n-modal v-model:show="welcomeModal" :mask-closable="false">
+      <n-card
+        style="width: 600px"
+        :bordered="false"
+        size="huge"
+        role="dialog"
+        aria-modal="true"
+        class="welcome"
+      >
+        <template #header-extra>
+          <n-button quaternary circle @click="welcomeModal = false">
+            <template #icon>
+              <n-icon><i class="ph ph-x"></i></n-icon>
+            </template>
+          </n-button>
+        </template>
+        <n-space justify="center">
+          <img src="/wp-content/plugins/tch-auth-module/res/logo.png" :style="{width: '150px', marginBottom: '25px'}">
+        </n-space>
+        <p :style="{textAlign:'center'}">Мы дарим Вам бесплатный доступ к журналу "АБ-Экспресс🥳 <br/>
+        Доступ будет действовать только 1 день! Все сервисы журнала для Вас доступны!</p>
+
+        <div id="surprise"></div>
+
+        <template #footer>
+          <n-space justify="center">
+            <n-button type="info" quaternary @click="closeWelcomeModal">Закрыть</n-button>
+          </n-space>
+        </template>
+      </n-card>
+    </n-modal>
+
+    <n-modal v-model:show="userEditModal">
+      <n-card
+        style="width: 400px"
+        :bordered="false"
+        size="medium"
+        role="dialog"
+        aria-modal="true"
+      >
+        <template #header>
+          Изменить {{userEditData.label}}
+        </template>
+        <template #header-extra>
+          <n-button quaternary circle @click="closeUserEditModal">
+            <template #icon>
+              <n-icon><i class="ph ph-x"></i></n-icon>
+            </template>
+          </n-button>
+        </template>
+        <n-alert
+          v-if="userEditData.response.visible"
+          :type="userEditData.response.type"
+          :style="{marginBottom: '25px'}">
+          <div v-html="userEditData.response.text"></div>
+        </n-alert>
+        <n-form>
+          <n-form-item
+            size="large"
+            :label="userEditData.label">
+            <n-input 
+              v-if="userEditData.field != 'phone'" 
+              v-model:value="userEditData.value">
+            </n-input>
+            <n-input 
+              v-else
+              @input="onEnterPhone"
+              :value="userEditData.value">
+            </n-input>
+          </n-form-item>
+        </n-form>
+        <template #footer>
+          <n-space justify="center">
+            <n-button 
+              type="info" 
+              size="large" 
+              :loading="userEditData.loading"
+              @click="saveEditedProfile">Сохранить</n-button>
+          </n-space>
+        </template>
+      </n-card>
+    </n-modal>
+  </n-config-provider>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", (event) => {
+    dayjs.locale('ru')
+    const path = window.location.pathname;
+    const { h } = window.Vue;
+
+    const App = {
+      data: () => ({
+        locale: {
+          ruRU: naive.ruRU,
+          dateRuRU: naive.dateRuRU
+        },
+        theme: {
+          common: {
+            borderRadius: '8px',
+            infoColor: '#006ab4'
+          }
+        },
+        welcomeModal: false,
+        userEditModal: false,
+        userEditData: {},
+        currentOption: 'profile',
+        menuOptions: [
+          {
+            label: 'Профиль',
+            key: 'profile',
+            icon() {
+              return h('i', { class: 'ph ph-user' })
+            },
+          },
+          {
+            label: 'Лента новостей',
+            key: 'news',
+            icon() {
+              return h('i', { class: 'ph ph-newspaper' })
+            },
+          },
+          {
+            label: 'Избранное',
+            key: 'favorites',
+            icon() {
+              return h('i', { class: 'ph ph-heart' })
+            },
+          },
+          {
+            label: 'Безопасность',
+            key: 'security',
+            icon() {
+              return h('i', { class: 'ph ph-shield' })
+            },
+          },
+          {
+            type: 'divider',
+            key: 'd1'
+          },
+          {
+            label: 'Выйти',
+            key: 'logout',
+            icon() {
+              return h('i', { class: 'ph ph-sign-out' })
+            },
+          }
+        ],
+        profileData: {},
+        securityData: {
+          loading: false,
+          validated: false,
+          old_password: '',
+          new_password: '',
+          new_password_repeat: ''
+        },
+        securityDataFeedbacks: {
+          old_password: {
+            text: '',
+            status: null
+          },
+          new_password: {
+            text: '',
+            status: null
+          },
+          new_password_repeat: {
+            text: '',
+            status: null
+          },
+        },
+        notificationsPosts: [],
+        notificationsCleared: false
+        
+      }),
+      created() {
+        this.getNotificationPosts();
+        const searchParams = new URLSearchParams(window.location.search);
+        if (searchParams.has('updated')) {
+          toastifyPush('Данные успешно обновлены', 'success');
+        }
+      },
+      watch: {
+        '$store.state.user' : function(val) {
+          this.userDataFormat(val);
+          this.showWelcome(val);
+          const searchParams = new URLSearchParams(window.location.search);
+          if (searchParams.has('tab')) {
+            this.currentOption = searchParams.get('tab')
+          } 
+        },
+        '$store.state.tabname': function(val) {
+          this.currentOption = val;
+          this.$store.state.tabname = val;
+        },
+        currentOption(val) {
+          if(val === 'news') {
+            this.clearNotifications();
+          }
+        },
+        userEditModal(val) {
+          if(!val) this.closeUserEditModal()
+        }
+      },
+      computed: {
+        getUserSubscribeAccess() {
+          if(this.$store.state.user.access === true) {
+            return {
+              type: 'info',
+              text: `Подписка действует до ${this.$store.state.user.subscribe_end} года.`
+            }
+          }
+
+          if (this.$store.state.user.access === false) {
+            return {
+              type: 'error',
+              title: 'Подписка истекла',
+              text: `Ваша подписка была закончена ${this.$store.state.user.subscribe_end}. Свяжитесь с редакцией журнала или <a href="/podpiska-na-zhurnal/">продлите</a> подписку онлайн.`
+            }
+          }
+
+          return
+        },
+        getReaded() {
+          return Cookies.get('readed')
+        }
+        
+      },
+      methods: {
+        async onValidatePassword() {
+          const data = this.securityData;
+
+          if(data.old_password.length == 0) {
+            this.securityDataFeedbacks.old_password = {
+              text: 'Напишите текущий пароль',
+              status: 'error'
+            }
+            this.securityData.validated = false
+          } else {
+            this.securityDataFeedbacks.old_password = {
+              text: '',
+              status: null
+            }
+            this.securityData.validated = true
+          }
+
+          if (data.new_password.length == 0) {
+            this.securityDataFeedbacks.new_password = {
+              text: 'Напишите новый пароль',
+              status: 'error'
+            }
+            this.securityData.validated = false
+          } else {
+            if(data.new_password.length < 6) {
+              this.securityDataFeedbacks.new_password = {
+                text: 'Пароль должен составить больше 6 символов',
+                status: 'error'
+              }
+              this.securityData.validated = false
+            } else {
+              this.securityDataFeedbacks.new_password = {
+                text: '',
+                status: null
+              }
+              this.securityData.validated = true
+            }
+          }
+
+          if(data.new_password_repeat.length == 0) {
+            this.securityDataFeedbacks.new_password_repeat = {
+              text: 'Напишите новый пароль повторно',
+              status: 'error'
+            }
+            this.securityData.validated = false
+          } else {
+            if(data.new_password_repeat != data.new_password) {
+              this.securityDataFeedbacks.new_password_repeat = {
+                text: 'Пароли не совпадают',
+                status: 'error'
+              }
+              this.securityData.validated = false
+            } else {
+              this.securityDataFeedbacks.new_password_repeat = {
+                text: '',
+                status: null
+              }
+            }
+          }
+        },
+        async onChangePassword() {
+          await this.onValidatePassword();
+          const valid = Object.entries(this.securityDataFeedbacks).filter(el => el[1].text != '');
+          if (valid.length > 0) return;
+          try {
+            this.securityData.loading = true;
+            const res = await req.post('user/password', this.securityData);
+            this.clearSecurity();
+            this.securityData.loading = false;
+            toastifyPush('Пароль успешно обновлен', 'success');
+          } catch (error) {
+            this.securityData.loading = false;
+            if(error.response.status == 401) {
+              this.securityDataFeedbacks.old_password = {
+                text: error.response.data?.error,
+                status: 'error'
+              }
+            } else {
+              toastifyPush('Непредвиденная ошибка', 'error')
+            }
+          }
+        },
+        async getNotificationPosts() {
+          try {
+            const res = await req.get('notify');
+            const posts = res.data;
+            const groups = posts.reduce((groups, post) => {
+              const date = post.date;
+              if (!groups[date]) {
+                groups[date] = [];
+              }
+              groups[date].push(post);
+              return groups;
+            }, {});
+
+            // Edit: to add it in the array format instead
+            const groupArrays = Object.keys(groups).map((date) => {
+              return {
+                date,
+                label: this.compareDates(date),
+                subposts: groups[date]
+              };
+            });
+            this.notificationsPosts = groupArrays
+          } catch (error) {
+            console.log(error);
+          }
+        },
+        async clearNotifications() {
+          const loaded = await !this.$store.state.loading;
+
+          Cookies.set('readed', this.$store.state.user.notifications);
+        },
+        async onValidateEditProfile() {
+          const data = this.userEditData;
+          if (data.field == 'email') {
+            if (data.value.length == 0) {
+              toastifyPush('Пустое поле для почты', 'error')
+              return false;
+            }
+            if (!validateEmail(data.value)) {
+              toastifyPush('Некорректная почта', 'error')
+              return false;
+            }
+          }
+          if (data.field == 'phone') {
+            if (data.value.length == 0) {
+              toastifyPush('Введите телефон', 'error')
+              return false;
+            }
+            if (data.value.length != 18) {
+              toastifyPush('Некорректная телефон', 'error')
+              return false;
+            }
+          }
+
+          return true
+        },
+        async saveEditedProfile() {
+          const validated = await this.onValidateEditProfile();
+          if(!validated) return;
+
+          this.userEditData.loading = true;
+          try {
+            const res = await req.post('user/edit', this.userEditData);
+            
+            if(res.data == 'updated') {
+              this.userEditData.response = {
+                type: 'success',
+                visible: true,
+                text: 'Данные успешно сохранены'
+              }
+              this.$store.commit('getUser');
+              this.userEditData.loading = false;
+
+              setTimeout(() => { this.closeUserEditModal() }, 2000);
+            } else {
+              this.userEditData.response = {
+                type: 'success',
+                visible: true,
+                text: 'На вашу текущую почту было отправлено письмо, просим подтвердить действие'
+              }
+
+              this.userEditData.loading = false;
+            }
+            
+          } catch (error) {
+            this.userEditData.response = {
+              type: 'error',
+              visible: true,
+              text: 'Произошло ошибка, свяжитесь с адиминистрацией'
+            }
+            this.userEditData.loading = false;
+
+          }
+        },
+        async onRemoveFromFav(id) {
+          const indexOfArticle = this.$store.state.user.favArticles.findIndex(el => el.id === id);
+          this.$store.state.user.favArticles[indexOfArticle].loading = true;
+          try {
+            const data = {
+              id
+            }
+            const res = await req.post('favorites/delete', data);
+            console.log(res.data);
+            this.$store.state.user.favArticles = res.data;
+            // this.$store.state.user.favArticles[indexOfArticle].loading = false;
+          } catch (e) {
+            console.log(e);
+            this.$store.state.user.favArticles[indexOfArticle].loading = false;
+          }
+        },
+        editPorfileDate(field, value) {
+          let data = {
+            verification: false,
+            field: field,
+            value: value,
+            label: this.getFieldLabel(field),
+            loading: false,
+            response: {
+              type: null,
+              visible: false,
+              text: '',
+            }
+          }
+          if(field == 'email' || field == 'phone') {
+            data.verification = true
+          }
+
+          this.userEditData = data;
+          this.userEditModal = true;
+          
+        },
+        clearSecurity() {
+          this.securityData = {
+            loading: false,
+            validated: false,
+            old_password: '',
+            new_password: '',
+            new_password_repeat: ''
+          }
+        },
+        updateOption(key) {
+          if(key == 'logout') {
+            this.$store.commit('removeUser');
+          }
+        },
+        userDataFormat(user) {
+          let data = {};
+          
+          data.username = {
+            value: user.username,
+            icon: 'ph ph-identification-card',
+            id: 'username',
+            label: 'Логин',
+            editable: false
+          }
+          data.email = {
+            value: user.email,
+            icon: 'ph ph-envelope',
+            id: 'email',
+            label: 'Email',
+            editable: true
+          }
+          data.first_name = {
+            value: user.first_name,
+            icon: 'ph ph-user-list',
+            id: 'first_name',
+            label: 'Имя',
+            editable: true
+          }
+          data.last_name = {
+            value: user.last_name,
+            icon: 'ph ph-user-list',
+            id: 'last_name',
+            label: 'Фамилия',
+            editable: true
+          }
+          data.phone = {
+            value: phoneInput(user.phone),
+            icon: 'ph ph-phone',
+            id: 'phone',
+            label: 'Номер телефона',
+            editable: true
+          }
+
+          this.profileData = Object.entries(data)
+        },
+        showWelcome(val) {
+          console.log(val);
+          if(val.showModal === true) {
+            const welcome = typeof Cookies.get('welcomeModal');
+            if (welcome != 'string') {
+              this.welcomeModal = true;
+              this.startLottie()
+            }
+          }
+        },
+        startLottie() {
+          lottie.loadAnimation({
+            container: document.getElementById('surprise'), // Required
+            renderer: 'svg',
+            loop: true,
+            autoplay: true,
+            path: '/wp-content/plugins/tch-auth-module/res/animation_lmhvpemy.json', // Required
+          })
+        },
+        closeWelcomeModal() {
+          Cookies.set('welcomeModal', 'closed');
+          this.welcomeModal = false;
+        },
+        compareDates(date) {
+          const currentDate = dayjs().format('YYYY-MM-DD');
+          const yesterDate = dayjs().subtract(1, 'day').format('YYYY-MM-DD');
+
+          if(date == currentDate) {
+            return 'Сегодня'
+          }
+          if(date == yesterDate) {
+            return 'Вчера'
+          }
+
+          return dayjs(date).format('d MMM YYYY')
+        },
+        showTime(time) {
+          return dayjs(time).format('HH:mm')
+        },
+        openPost(link) {
+          window.open(link, '_self');
+        },
+        closeUserEditModal() {
+          this.userEditModal = false;
+          this.userEditData = {
+            verification: false,
+            field: '',
+            value: '',
+            label: '',
+            loading: false,
+            response: {
+              type: null,
+              visible: false,
+              text: '',
+            }
+          };
+        },
+        getFieldLabel(key) {
+          switch (key) {
+            case 'phone':
+              return 'Телефон';
+            case 'email':
+              return 'Email';
+            case 'first_name':
+              return 'Имя';
+            case 'last_name':
+              return 'Фамилия';          
+            default:
+              break;
+          }
+        },
+        onEnterPhone(val) {
+          if (val == 8) {
+            this.userEditData.value = phoneInput('7')
+          } else {
+            this.userEditData.value = phoneInput(val)
+          }
+        },
+      }
+    }
+
+    const app = Vue.createApp(App)
+    app.use(naive);
+    app.use(store);
+    app.mount('#account')
+  });
+</script>

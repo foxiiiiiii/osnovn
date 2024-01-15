@@ -1,0 +1,28 @@
+<div class="center-block site-content-right" xmlns:v-on="http://www.w3.org/1999/xhtml">
+    <div class="breadcrumbs">{{ breadcrumbs }}</div>
+    <main role="main">
+        <h1>{{ bulletin.title }}</h1>
+
+        {% if image_bulletins %}
+            <div class="last-number-main magazine-page">
+                <img src="{{ image_bulletins.url }}" alt="{{ bulletin.title }}">
+                <ul>
+                    {% for post in posts %}
+                        <li>
+                            <a href="{{ post.link }}">{{ post.title }}</a>
+                            {% if post.first_sentence %}
+                                <p>{{ post.first_sentence }}</p>
+                            {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        
+        <nav class="nav-single">
+            <h3 class="assistive-text"></h3>
+            <span class="nav-previous"></span>
+            <span class="nav-next"></span>
+        </nav><!-- .nav-single -->
+    </main>
+</div>

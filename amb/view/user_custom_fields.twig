@@ -1,0 +1,31 @@
+<div id="subscriber_info">
+    <h3>Информация по подписке</h3>
+    <table class="form-table">
+        <tr>
+            <th><label for="company">Дата активации подписки</label></th>
+            <td>
+                <div class="input-group" id="datetimepicker_start" style="width: 250px">
+                    <input type="text" class="form-control" name="subscribe_start" value="{{ subscribe_start }}"/>
+                    <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="company">Дата окончания подписки</label></th>
+            <td>
+                <div class="input-group" id="datetimepicker_end" style="width: 250px">
+                    <input type="text" class="form-control" name="subscribe_end" value="{{ subscribe_end }}"/>
+                    <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </span>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th><label for="is_suspended">Действие аккаунта приостановлено</label></th>
+            <td><input type="checkbox" name="is_suspended" id="is_suspended" {% if is_suspended %}checked{% endif %}></td>
+        </tr>
+    </table>
+</div>

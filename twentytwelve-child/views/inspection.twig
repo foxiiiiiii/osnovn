@@ -1,0 +1,47 @@
+<div id="primary" class="center-block site-content-right">
+    <div class="breadcrumbs">{{ breadcrumbs }}</div>
+    <div id="content" role="main">
+        <h1>{{ inspection.name }}</h1>
+
+        {% set previous = '' %}
+        {% for new in posts_result.Posts %}
+
+        {% if previous != new.post_date|date("d.m.Y") %}
+        {% if previous != '' %}
+    </div>
+</div>
+{% endif %}
+<div class="block-one-date">
+    <div class="one-date-news">
+        <span><i class="fa fa-calendar-o" aria-hidden="true"></i> {{ new.post_date|date("d.m.Y") }}</span>
+    </div>
+    <div class="content-article">
+        {% endif %}
+        <div class="one-news">
+            <div class="one-news-title">
+                <a href="/news-fns/{{ inspection.slug }}/{{ new.slug }}/">{{ new.title }}</a>
+            </div>
+            <div>{{ new.content | excerpt(30) }}</div>
+        </div>
+
+        {% set previous = new.post_date|date("d.m.Y") %}
+
+        {% endfor %}
+
+        {% if posts_result.Posts %}
+    </div>
+</div>
+        {% endif %}
+
+{#<nav class="nav-single">#}
+{#    <span class="nav-previous">{% if paginat.prev %}<a href="{{ paginat.prev.link }}">предыдущие</a>{% else %} {% endif %}</span>#}
+{#    <span class="nav-next">{% if paginat.next %}<a href="{{ paginat.next.link }}">cледующие</a>{% else %} {% endif%}</span>#}
+{#</nav><!-- .nav-single -->#}
+ <nav class="nav-single">
+         <span class="nav-previous">{% if paginat.prev %}<a href="{{ paginat.prev.link }}">предыдущие</a>{% else %} {% endif %}</span>
+         <span class="nav-next">{% if paginat.next %}<a href="{{ paginat.next.link }}">cледующие</a>{% else %} {% endif%}</span>
+ </nav><!-- .nav-single -->
+
+
+</div><!-- #content -->
+</div><!-- #primary -->

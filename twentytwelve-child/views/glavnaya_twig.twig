@@ -1,0 +1,72 @@
+<div class="center-block site-content-right">
+
+    <main role="main">
+        <h1>Журнал «АБ-Экспресс» - "ТЕСТОВАЯ"</h1>
+        <div class="static-content">
+            {{ page.content }}
+        </div>
+
+        <div class="last-number-main">
+            <h2>Номер № {{ last.current_number }} <span>({{ last.title }})</span></h2>
+
+            {% if main %}
+                <div class="statya-nomera">
+
+                    <h3>Важно знать</h3>
+                    {% if main.thumbnail %}
+                        <a href="{{ main.link }}" title="{{ main.title }}"><img src="{{ main.thumbnail.src|resize(400, 250) }}" alt="{{ main.title }}"></a>
+                    {% endif %}
+                    <a class="statya-nomera-title" href="{{ main.link }}">{{ main.title }}</a>
+                    <p>{{ main.content | raw | truncate(40) }}<a href="{{ main.link }}">читать далее</a></p>
+                </div>
+            {% endif %}
+
+            {% if imparticles %}
+                <div class="vazhnie-statyi">                    
+                    <ul>
+                        {% for article in imparticles %}
+                            <li><a href="{{ article.link }}">{{ article.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            <div class="ostalnie-statyi">
+                {% if imparticles %}
+               
+                {% endif %}
+
+                <ul>
+                    {% for article in articles %}
+                        <li><a href="{{ article.link }}">{{ article.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+
+{#        <div class="last-number-main">#}
+{#            <h2>Номер № {{ last.current_number }} <span>({{ last.title }})</span></h2>#}
+{#            <img src="/wp-content/uploads/2020/03/amb1.png" alt="журнал">#}
+{#            <ul>#}
+{#                {% for article in articles %}#}
+{#                    <li><a href="{{ article.link }}">{{ article.title }}</a></li>#}
+{#                {% endfor %}#}
+{#            </ul>#}
+{#        </div>#}
+
+
+        <div class="news-online-main">
+            <h2>Новости онлайн</h2>
+            {% include "part/newslist.twig" with {'news': news, 'fns': false} %}
+            <a href="/news/" class="main-news-next">Другие новости</a>
+        </div>
+
+        {# <div class="news-ifns-main"> #}
+        {# <h2>Новости ФНС</h2> #}
+        {# {% include "part/newslist.twig" with {'news': fnsnews, 'fns': true} %} #}
+        {# <a href="/news-fns/" class="main-news-next">Другие новости ФНС</a> #}
+        {# </div> #}
+
+
+    </main>
+</div>

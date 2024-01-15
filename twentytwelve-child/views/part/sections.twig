@@ -1,0 +1,36 @@
+<ul class="chitalka-rubriki">
+    {% if vm.Sections %}
+        {% for section in vm.Sections %}
+            <li class="section-item"><a href="/section/{{ section.slug }}">{{ section.name }}</a></li>
+            <div class="subsection-item">
+                {% if section.children|length > 0 %}
+                    <ul class="chitalka-podrubriki">
+                        {% for child in section.children %}
+                            <li><a href="/section/{{ section.slug }}/{{ child.slug }}">{{ child.name }}</a></li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        {% endfor %}
+    {% else %}
+{#        {% if vm.Type == 3 %}#}
+{#            <div></div>#}
+{#        {% else %}#}
+{#            <li class="section-item"><a href="#">Нет категорий</a></li>#}
+{#        {% endif %}#}
+        <div>Введит текст в поле ввода для поиска</div>
+
+    {% endif %}
+
+    {#    <li><a href="/">Рубрика 1</a></li> #}
+    {#        <ul class="chitalka-podrubriki"> #}
+    {#            <li><a href="/">Подрубрика 1</a></li> #}
+    {#            <li><a href="/">Подрубрика 2</a></li> #}
+    {#            <li><a href="/">Подрубрика 3</a></li> #}
+    {#            <li><a href="/">Подрубрика 4</a></li> #}
+    {#        </ul>    #}
+    {#    <li><a href="/">Рубрика 2</a></li> #}
+    {#    <li><a href="/">Рубрика 3</a></li> #}
+    {#    <li><a href="/">Рубрика 4</a></li> #}
+    {#    <li><a href="/">Рубрика 5</a></li> #}
+</ul>

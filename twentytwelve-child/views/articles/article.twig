@@ -1,0 +1,100 @@
+<div id="primary" class="site-content center-block">
+	<div class="breadcrumbs">{{ breadcrumbs }}</div>
+	<div id="content">
+		<h1>{{ article.title }}</h1>
+
+		{% if magazine.cusom.art_links != 0 %}
+			<div class="published">Статья в журнале:
+				<a href="{{ magazine.link }}">
+					{% if magazine %}
+						{{ magazine.title }}
+					{% endif %}
+				</a>, опубликовано
+				{{ article.post_date |date("d.m.Y") }}
+			</div>
+		{% endif %}
+		<div class="theme">Тематики:
+    {% for term in terms %}
+        <a href="/section/{{ term.slug }}">{{ term.name }}</a>{% if not loop.last %}, {% endif %}
+    {% endfor %}
+</div>
+
+		<div class="content-article">
+			{{ article.content }}
+			{# {% if not can_see.Result and not abonent.isBot %}
+							{% include '/part/auth/modal_abonent.twig' with {'instruction': abonent.instruction, 'title': abonent.instruction_title, 'error': abonent.error} %}
+						{% endif %} #}
+
+			{{ function('do_shortcode', '[single_login]') }}
+
+		</div>
+
+		<a href="#" id="print_art" class="btn btn-default btn-sm print-article">
+			<i class="fa fa-print" aria-hidden="true"></i>
+			Распечатать статью
+		</a>
+
+
+		{# {% if can_see.Result %}
+							<a href="#" id="fav_action" class="btn btn-default btn-sm izb-article" data-art="{{ article.ID }}">
+								<img src="{{ fav }}" alt="Добавить в избранное" title="Добавить в избранное" id="fav_img">
+								Добавить в избранное
+							</a>
+						{% endif %} #}
+
+		{% if current_user_authed %}
+			<input type="hidden" value="{{ article.ID }}" id="article_id"/>
+			{{ function('do_shortcode', '[favorites_add]') }}
+		{% endif %}
+
+
+		<div class="subscribe-me">
+			<div class="sub-title">
+				<img src="/wp-content/uploads/2021/02/email.png">
+				<h3>ПОДПИШИТЕСЬ НА НОВОСТИ И СВЕЖИЕ СТАТЬИ</h3>
+			</div>
+			<div class="sub-form">
+				<form action="https://ab-express.ru/wp-admin/admin-post.php" method="post">
+					<div class="form-group">
+						<div
+							class="form-group">
+							<!-- <label for="fio">Имя (Организация) <span style="color: red">*</span></label> -->
+							<input type="text" class="form-control" id="fio" placeholder="Ваше имя или название организации" name="fio" required>
+						</div>
+						<div
+							class="form-group">
+							<!-- <label for="email">Email <span style="color: red">*</span></label> -->
+							<input type="email" class="form-control" id="email" placeholder="Ваш email" name="email" required>
+						</div>
+						<div
+							class="form-group">
+							<!-- <label for="phone">Телефон <span style="color: red">*</span></label> -->
+							<input type="tel" class="form-control" id="phone" placeholder="Ваш номер телефона" name="phone" required>
+						</div>
+						<div class="form-group">
+							<div class="g-recaptcha" data-sitekey="6LdKY64ZAAAAAC388XgNCjPgGGZfBF67_Qqu-hoe"></div>
+							<div class="input-group-btn">
+								<button class="btn btn-default" type="submit">Отправить</button>
+							</div>
+						</div>
+					</div>
+					<input type="hidden" name="action" value="add_subscriber">
+					<br>
+				</form>
+			</div>
+		</div>
+
+
+		<nav class="nav-single">
+			<h3 class="assistive-text"></h3>
+			<span class="nav-previous"></span>
+			<span class="nav-next"></span>
+		</nav>
+		<!-- .nav-single -->
+
+	</div>
+	<!-- #content -->
+</div>
+<!-- #primary -->
+
+ <script src="/wp-content/themes/twentytwelve-child/inc/js/print.js"></script>

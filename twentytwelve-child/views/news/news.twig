@@ -1,0 +1,20 @@
+<div id="primary" class="site-content center-block">
+    <div class="breadcrumbs">{{ breadcrumbs }}</div>
+    <div id="content" role="main">
+
+        <h1>Новости</h1>
+    
+        {% include "part/newslist.twig" with {news:news} %}
+
+        <nav class="nav-single">
+            <span class="nav-previous">{% if paginat.prev %}<a href="{{ paginat.prev.link }}">предыдущие</a>{% else %} {% endif %}</span>
+            <span class="nav-next">{% if paginat.next %}<a href="{{ paginat.next.link }}">cледующие</a>{% else %} {% endif%}</span>
+        </nav><!-- .nav-single -->
+
+
+
+
+
+
+    </div><!-- #content -->
+</div><!-- #primary -->

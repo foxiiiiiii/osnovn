@@ -1,0 +1,139 @@
+[v-cloak] {
+  display: none;
+}
+
+.toastify {
+  border-radius: 8px !important;
+  font-size: 16px !important;
+}
+
+#login * {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.n-form {
+  label {
+    margin: 0;
+  }
+  .ph {
+    color: #006AB4;
+    font-size: 22px;
+  }
+}
+
+#login {
+  form {
+    
+    padding: 0 10px;
+    label {
+      font-size: 15px;
+      margin-bottom: 0;
+    }
+    .n-input__prefix {
+      .ph {
+        color: #006AB4;
+        font-size: 22px;
+      }
+    }
+  }
+}
+
+.header_account_wrapper {
+  min-width: 225px;
+
+  .n-badge {
+    cursor: pointer;
+  }
+  .n-badge i {
+    font-size: 25px;
+  }
+}
+
+.n-dropdown-option-body__prefix {
+  i {
+    font-size: 20px;
+  }
+}
+
+#sidebar_login {
+  .ph {
+    color: #006AB4;
+    font-size: 22px;
+  }
+  .n-input {
+    height: 46px;
+  }
+
+  .n-form-item-label {
+    margin: 0;
+  }
+}
+
+#account {
+  label {
+    margin: 0;
+  }
+  .pointer-none input {
+    pointer-events: none;
+  }
+  .account_content {
+    display: flex;
+    gap: 40px;
+
+    .left_menu {
+      width: 250px;
+    }
+
+    .main_content {
+      width: calc(100% - 250px);
+    }
+  }
+
+  .security {
+    .ph {
+      color: #006AB4;
+      font-size: 22px;
+    }
+  }
+}
+
+.welcome {
+  .n-card__content {
+    position: relative;
+  }
+  #surprise {
+    height: 220px;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    svg {
+      transform: scale(2) !important;
+    }
+  }
+}
+
+// -100px
+
+.single_login_card img {
+  margin-top: -100px;
+}
+.reg-enter {
+  text-align: center;
+}
+
+
+
+
+
+.d-flex {
+  display: flex;
+}
+.align-center {
+  align-items: center;
+}
+.gap-20 {
+  gap: 20px;
+}
+

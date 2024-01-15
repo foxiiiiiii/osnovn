@@ -1,0 +1,63 @@
+<div class="center-block site-content-right">
+    <div class="breadcrumbs">{{ breadcrumbs }}</div>
+    <main role="main">
+        
+        <h1>{{ post.title }}</h1>
+        <div class="static-content">
+
+            {% if flash_message %}
+                <div class="alert alert-info" role="alert">{{ flash_message }}</div>
+            {% endif %}
+            <div class="page-subscribe">
+                <p>Укажите Ваш e-mail, и вовремя получайте интересную и полезную информацию по электронной почте:</p>
+                
+                <ul>
+                    <li><a href="/news/">Бухгалтерские новости онлайн</a>;</li>
+                    <li><a href="/">Анонс свежего номера журнала "АБ-Экспресс"</a> и материалов, готовящихся к публикации;</li>
+                    <li>Новые статьи в свободном доступе, которые позволят Вам составить собственное объективное мнение о журнале;</li>
+                    <li>Анонсы тем "Горячих линий" - консультации от ведущих аудиторских компаний Екатеринбурга;</li>
+                    <li><a href="/podpiska-na-zhurnal/">Специальное предложение по подписке</a> - не упустите
+                        возможность сэкономить;
+                    </li>
+                    <li>Анонсы профессиональных мероприятий для бухгалтеров.</li>
+                </ul>
+                
+                <div class="subscribe-add-mail">
+                    <h3>Для добавления в рассылку, отправьте свою электронную почту</h3>
+                    
+                    <form action="{{ action_addr }}" method="post">
+                        <div class="form-group">
+                            <div class="form-group">
+                                <label for="fio">Имя (Организация) <span style="color: red">*</span></label>
+                                <input type="text" class="form-control" id="fio" placeholder="Ваше имя или название организации" name="fio" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email <span style="color: red">*</span></label>
+                                <input type="email" class="form-control" id="email" placeholder="Ваш email"
+                                       name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="phone">Телефон <span style="color: red">*</span></label>
+                                <input type="tel" class="form-control" id="phone" placeholder="Ваш номер телефона"
+                                       name="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <div class="g-recaptcha" data-sitekey="6LdKY64ZAAAAAC388XgNCjPgGGZfBF67_Qqu-hoe"></div>
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default" type="submit">Отправить</button>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="action" value="add_subscriber">
+                        <br>
+                    </form>
+                
+                </div>
+            </div>
+        
+        
+        </div>
+    
+    
+    </main>
+</div>

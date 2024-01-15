@@ -1,0 +1,21 @@
+<div class="center-block site-content-right">
+    <div class="breadcrumbs">{{ breadcrumbs }}</div>
+    <main role="main">
+
+        <h1>{{ post.title }}</h1>
+        <div class="static-content">
+
+            {% if flash_message %}
+                <div class="alert alert-info" role="alert">{{ flash_message }}</div>
+            {% endif %}
+
+            <div class="static-content">
+                {{ post.content }}
+            </div>
+
+            
+        </div>
+
+
+    </main>
+</div>

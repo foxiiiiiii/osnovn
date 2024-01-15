@@ -1,0 +1,44 @@
+<div id="primary" class="site-content center-block">
+	<div class="breadcrumbs">{{ breadcrumbs }}</div>
+	<div id="content" role="main" class="">
+		<h1>{{ news.title }}</h1>
+
+		<div class="published">Опубликовано
+			{{ news.post_date|date("d.m.Y") }}</div>
+
+		<div class="content-article">
+			{% if news.thumbnail %}
+				<img src="{{ news.thumbnail.src }}" alt="{{ news.title }}" class="single-news-img">
+			{% endif %}
+			{{ news.content }}
+		</div>
+
+		{#        {% if is_logged %}#}
+		{#            <div>#}
+		{#                {% for section in sections %}#}
+		{#                    <span style="border: #1ea0c3 1px solid">{{ section.name }}</span>#}
+		{#                {% endfor %}#}
+		{#            </div>#}
+		{#        {% endif %}#}
+
+
+			<nav class="nav-single"> <span class="nav-previous">
+				{% if prev %}
+					{{ prev }}
+					{% else %}
+				{% endif %}
+			</span>
+			<span class="nav-next">
+				{% if next %}
+					{{ next }}
+					{% else %}
+				{% endif %}
+			</span>
+		</nav>
+		<!-- .nav-single -->
+
+
+	</div>
+	<!-- #content -->
+</div>
+<!-- #primary -->

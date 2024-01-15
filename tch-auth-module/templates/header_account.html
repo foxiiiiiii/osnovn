@@ -1,0 +1,167 @@
+<div class="header_account_wrapper">
+  
+  <div id="header_account" v-cloak>
+    <n-config-provider :locale="locale.ruRU" :date-locale="locale.dateRuRU" :theme-overrides="theme">
+      <template v-if="$store.state.authed === true">
+        <div class="d-flex align-center gap-20">
+          <n-badge 
+            :value="getNotifies" 
+            :processing="getNotifies > 0 ? true : false"
+            @click="handleSelect('news')">
+            <i class="ph ph-bell"></i>
+          </n-badge>
+
+          <n-dropdown 
+            trigger="click" 
+            :options="options" 
+            @select="handleSelect" 
+            size="large">
+            <n-button 
+              size="large" 
+              type="info" 
+              icon-placement="left" 
+              secondary>
+              <template #icon>
+                <i class="ph ph-user-circle"></i>
+              </template>
+              {{$store.state.user.first_name}}
+            </n-button>
+          </n-dropdown>
+          
+        </div>
+      </template>
+      
+      <n-button 
+        v-if="$store.state.authed === false"
+        size="large" 
+        type="info" 
+        icon-placement="left" 
+        secondary 
+        @click="toAccount">
+        <template #icon>
+          <i class="ph ph-user-circle"></i>
+        </template>
+        Войти в аккаунт
+      </n-button>
+      <n-skeleton v-if="$store.state.authed === null" :width="197" round size="large"></n-skeleton>
+
+    </n-config-provider>
+  </div>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", (event) => {
+  const path = window.location.pathname;
+
+  const { h } = window.Vue;
+  const App = {
+    data: () => ({
+      locale: {
+        ruRU: naive.ruRU,
+        dateRuRU: naive.dateRuRU
+      },
+      theme: {
+        common: {
+          borderRadius: '8px',
+          infoColor: '#006ab4'
+        }
+      },
+      options: [
+        {
+          label: 'Профиль',
+          key: 'profile',
+          icon() {
+            return h('i', {class: 'ph ph-user'})
+          },
+        },
+        {
+          label: 'Лента новостей',
+          key: 'news',
+          icon() {
+            return h('i', { class: 'ph ph-newspaper' })
+          },
+        },
+        {
+          label: 'Избранное',
+          key: 'favorites',
+          icon() {
+            return h('i', { class: 'ph ph-heart' })
+          },
+        },
+        {
+          label: 'Безопасность',
+          key: 'security',
+          icon() {
+            return h('i', { class: 'ph ph-shield' })
+          },
+        },
+        {
+          type: 'divider',
+          key: 'd1'
+        },
+        {
+          label: 'Выйти',
+          key: 'logout',
+          icon() {
+            return h('i', { class: 'ph ph-sign-out' })
+          },
+        }
+      ]
+    }),
+    computed: {
+      getUserEmail() {
+        if(this.$store.state.user?.email) {
+          return true;
+        } else {
+          return false
+        }
+      },
+      getNotifies() {
+        const readed = typeof Cookies.get('readed') == 'string' ? parseInt(Cookies.get('readed')) : false;
+        if(!this.$store.state.loading) {
+          if (readed !== false) {
+            if (readed == this.$store.state.user.notifications) {
+              return 0
+            } else {
+              return this.$store.state.user.notifications - readed
+            }
+          } else {
+            return this.$store.state.user.notifications;
+          }
+        } else {
+          return 0
+        }
+      }
+    },
+    methods: {
+      toAccount(newTab) {
+        if(window?.user?.email) {
+          window.open('/account', '_self')
+        } else {
+          window.open('/auth', '_self')
+        }
+      },
+      handleSelect(option) {
+        if(option == 'logout') {
+          this.$store.commit('removeUser')
+        } else {
+          this.openNotify(option)
+        }
+      },
+      openNotify(name) {
+        if(path.includes('account')) {
+          this.$store.commit('openTabFromHead', name)
+        } else {
+          window.open(`/account?tab=${name}`, '_self')
+        }
+      }
+    }
+  }
+
+  const app = Vue.createApp(App)
+  app.use(naive);
+  app.use(store);
+  app.mount('#header_account')
+})
+</script>

@@ -1,0 +1,296 @@
+<div id="single_login_wrap">
+  <div id="single_login" v-cloak>
+    <n-config-provider :locale="locale.ruRU" :date-locale="locale.dateRuRU" :theme-overrides="theme">
+      <n-modal v-model:show="showAuth" :mask-closable="false" :close-on-esc="false">
+        <n-card
+          style="width: 400px; background-color: #fff;"
+          :bordered="false"
+          size="huge"
+          role="dialog"
+          aria-modal="true"
+          class="single_login_card"
+        >
+          <template #header-extra>
+            <n-button quaternary circle @click="showAuth = false">
+              <template #icon>
+                <n-icon><i class="ph ph-x"></i></n-icon>
+              </template>
+            </n-button>
+          </template>
+          <n-space justify="center">
+            <img src="/wp-content/plugins/tch-auth-module/res/logo.png" :style="{width: '150px', marginBottom: '25px'}">
+          </n-space>
+          <p :style="{textAlign:'center', marginBottom: '25px'}">Все права на материалы защищены, многие статьи на нашем сайте находятся в закрытом доступе.
+            <br>
+          Предлагаем зарегистрироваться или авторизоваться, чтобы продолжить чтение.</p>
+
+          <n-collapse-transition :show="alert.visible">
+            <n-alert
+              title="Ошибка"
+              :type="alert.status"
+              :style="{marginBottom: '25px'}"
+              v-if="alert.visible">
+              {{alert.text}}
+            </n-alert>
+          </n-collapse-transition>
+
+          <n-spin :show="isVerification && loading">
+            <n-form>
+              <n-form-item
+                size="large"
+                :feedback="loginFeedbacks.username.text"
+                :validation-status="loginFeedbacks.username.status">
+
+                <template #label>
+                  <n-space>
+                    <span>
+                      Эл. почта
+                    </span>
+                    <n-switch size="small" v-model:value="login.type"></n-switch>
+                    <span>
+                      Логин
+                    </span>
+                  </n-space>
+                </template>
+
+                <n-input v-model:value="login.username" :placeholder="!login.type ? 'Введите email' : 'Введите логин'">
+                  <template #prefix>
+                    <i class="ph ph-envelope" v-if="!login.type"></i>
+                    <i class="ph ph-identification-card" v-else></i>
+                  </template>
+                </n-input>
+              </n-form-item>
+
+              <n-form-item
+                label="Пароль"
+                size="large"
+                :feedback="loginFeedbacks.password.text"
+                :validation-status="loginFeedbacks.password.status">
+
+                <n-input type="password" v-model:value="login.password">
+                  <template #prefix>
+                    <i class="ph ph-lock"></i>
+                  </template>
+                </n-input>
+              </n-form-item>
+              <n-button
+                size="large"
+                type="info"
+                block
+                @click="onLogin"
+                :loading="login.loading">Войти в личный кабинет</n-button>
+              <n-space justify="space-between" :style="{marginTop: '15px'}">
+                <a href="/auth?tab=register">Создать аккаунт</a>
+                <a href="/auth?tab=restore">Восстановить доступ</a>
+              </n-space>
+            </n-form>
+          </n-spin>
+        </n-card>
+      </n-modal>
+
+      <n-modal v-model:show="showExpired" :mask-closable="false" :close-on-esc="false">
+        <n-card
+          style="width: 500px; background-color: #fff;"
+          :bordered="false"
+          size="huge"
+          role="dialog"
+          aria-modal="true"
+          class="single_login_card"
+        >
+          <template #header-extra>
+            <n-button quaternary circle @click="showAuth = false">
+              <template #icon>
+                <n-icon><i class="ph ph-x"></i></n-icon>
+              </template>
+            </n-button>
+          </template>
+          <n-space justify="center">
+            <img src="/wp-content/plugins/tch-auth-module/res/logo.png" :style="{width: '150px', marginBottom: '25px'}">
+          </n-space>
+          <n-alert
+            title="Подписка истекла"
+            type="error">
+            Ваша подписка была закончена {{this.$store.state.user.subscribe_end}}. Свяжитесь с редакцией журнала или <a
+              href="/podpiska-na-zhurnal/">продлите</a> подписку онлайн.
+          </n-alert>
+        </n-card>
+      </n-modal>
+    </n-config-provider>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", (event) => {
+  const path = window.location.pathname;
+  const App = {
+    data: () => ({
+      showAuth: false,
+      showExpired: false,
+      locale: {
+        ruRU: naive.ruRU,
+        dateRuRU: naive.dateRuRU
+      },
+      theme: {
+        common: {
+          borderRadius: '8px',
+          infoColor: '#006ab4'
+        }
+      },
+      showRegModal: false,
+      restoreModal: false,
+      isVerification: null,
+      activeTab: 'login',
+      loading: true,
+      login: {
+        loading: false,
+        validated: false,
+        type: false,
+        username: '',
+        password: ''
+      },
+      loginFeedbacks: {
+        username: {
+          text: '',
+          status: null
+        },
+        password: {
+          text: '',
+          status: null
+        }
+      },
+      alert: {
+        text: '',
+        status: '',
+        visible: false
+      },
+      showModalStatus: null
+    }),
+    created() {
+      const token = Cookies.get('token');
+      this.showModalStatus = document.getElementById('showSingleLoginModalInArticle').value == '0' ? false : true;
+      if (typeof token != 'string') {
+        this.showModal()
+      } else {
+        if (token.length < 90) {
+          this.showModal()
+        }
+      }
+    },
+    watch: {
+      '$store.state.authed' : function() {
+        if(this.$store.state.user.access === false && this.showModalStatus) {
+          this.showExpired = true;
+        }
+      }
+    },
+    methods: {
+      async onValidateLogin() {
+        const data = this.login;
+        if (data.username.length == 0) {
+          this.loginFeedbacks.username.text = !data.type ? 'Введите эл. почту' : 'Введите логин';
+          this.loginFeedbacks.username.status = 'error';
+          this.login.validated = false;
+        } else {
+          if (!window.validateEmail(data.username) && !data.type) {
+            this.loginFeedbacks.username.text = 'Некорректная почта';
+            this.loginFeedbacks.username.status = 'error';
+            this.login.validated = false;
+          } else {
+            this.loginFeedbacks.username.text = '';
+            this.loginFeedbacks.username.status = 'success';
+            this.login.validated = true;
+          }
+        }
+
+        if (data.password.length == 0) {
+          this.loginFeedbacks.password.text = 'Введите пароль';
+          this.loginFeedbacks.password.status = 'error';
+          this.login.validated = false;
+        } else {
+          this.loginFeedbacks.password.text = '';
+          this.loginFeedbacks.password.status = 'success';
+          this.login.validated = true;
+        }
+      },
+      async onLogin() {
+        await this.onValidateLogin();
+        const valid = Object.entries(this.loginFeedbacks).filter(el => el[1].text != '');
+        if (valid.length > 0) return;
+
+        try {
+          this.login.loading = true;
+          const res = await req.post('login', this.login);
+          const token = res.data;
+          Cookies.set('token', token);
+          if(path.includes('auth')) {
+            setTimeout(() => {
+              window.open('/account', '_self')
+            }, 1500);
+          } else {
+            window.open(path, '_self');
+          }
+
+        } catch (error) {
+          this.login.loading = false;
+          if(error.response.status == 401) {
+            this.alert = {
+              text: error.response.data?.error,
+              status: 'error',
+              visible: true
+            }
+            // toastifyPush(error.response.data?.error, 'error')
+          } else if (error.response.status == 400) {
+            this.alert = {
+              text: error.response.data?.error,
+              status: 'error',
+              visible: true
+            }
+            // toastifyPush(error.response.data?.error, 'info')
+          } else {
+            toastifyPush('Непредвиденная ошибка!', 'error')
+          }
+          setTimeout(() => { this.alert.visible = false }, 3500);
+        }
+      },
+      onRegPhone(val) {
+        if(val == 8) {
+          this.reg.phone = phoneInput('7')
+        } else {
+          this.reg.phone = phoneInput(val)
+        }
+      },
+      async copyPassword() {
+        try {
+          await copyToClipboard(this.reg.password);
+          toastifyPush('Пароль в буфере обмена', 'success')
+        } catch (e) {
+          console.log(e);
+        }
+      },
+      showModal() {
+        const showModalStatus = document.getElementById('showSingleLoginModalInArticle').value == '0' ? false : true;
+        if(showModalStatus) {
+          setTimeout(() => {
+            this.showAuth = true;
+          }, 10000);
+        }
+      }
+    }
+  }
+
+  const app = Vue.createApp(App)
+  app.use(naive);
+  app.use(store);
+  app.mount('#single_login')
+});
+</script>
+
+<style>
+  .n-modal-mask {
+    background-color: #000000e6;
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(5px);
+    width: 100%;
+    height: 100%;
+  }
+</style>

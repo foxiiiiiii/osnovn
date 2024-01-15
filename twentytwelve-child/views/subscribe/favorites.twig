@@ -1,0 +1,42 @@
+<div class="center-block site-content-right">
+    <div class="breadcrumbs">{{ breadcrumbs }}</div>
+    <main role="main">
+
+        <h1>{{ post.title }}</h1>
+
+        {% if subpages %}
+            <ul class="page-sections">
+                {% for page in subpages %}
+                    <li>
+                        <a href="{{ page.link }}">{{ page.subpage.post_title }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+
+        <div class="static-content">
+            {% if ronly is empty %}
+                {{ post.content }}
+            {% elseif  ronly == '1' and not logged %}
+                {% include 'part/auth/not_auth.twig' %}
+            {% else %}
+                {{ post.content }}
+                
+                <div class="articles">
+                    <ul class="favorites">{% for fav in favorites %}
+                        <li>
+                            <a href="{{ fav.link }}" class="stati-link">{{ fav.title }}</a> <span class="stati-date">{{ fav.post_date|date("d.m.Y") }}</span>
+                            <a href="#" data-id="{{ fav.ID }}" onclick="removeArticle(this);" title="Удалить из избранного"><i class="fa fa-trash-o" aria-hidden="true"></i></a>
+                            <a href="/magazines/{{ fav.custom.magazine.slug }}"
+                               class="stati-nomer">{{ fav.custom.magazine.title }}</a>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div><!-- /.articles -->
+            {% endif %}
+
+        </div>
+
+    </main>
+</div>

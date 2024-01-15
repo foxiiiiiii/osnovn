@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <link rel="stylesheet" href="css/style.min.css" />
+  <title>Подписка на журнал «АБ-Экспресс»</title>
+</head>
+
+<body>
+  <header class="header">
+    <div class="header__top">
+      <div class="container header-container">
+        <div class="header__inner">
+          <a class="logo" href="#">
+            <img class="logo__img" src="images/logo.jpg" alt="логотип" />
+            <img class="logo__img2" src="images/logo-footer.png" alt="логотип">
+          </a>
+          <nav class="menu">
+            <ul class="menu__list">
+              <li class="menu__list-item">
+                <a class="menu__list-link" target="_blank" href="https://ab-express.ru/about/">О журнале</a>
+              </li>
+              <li class="menu__list-item">
+                <a class="menu__list-link" target="_blank" href="https://ab-express.ru/arhiv-nomerov/">Бюллетень</a>
+              </li>
+              <li class="menu__list-item">
+                <a class="menu__list-link" target="_blank" href="https://ab-express.ru/formy-dokumentov/">Формы
+                  документов</a>
+              </li>
+              <li class="menu__list-item">
+                <a class="menu__list-link" target="_blank" href="https://ab-express.ru/kalkulyatory/">Калькуляторы</a>
+              </li>
+              <li class="menu__list-item">
+                <a class="menu__list-link" target="_blank" href="https://ab-express.ru/contacts/">Контакты</a>
+              </li>
+              <li class="menu__list-item">
+                <a class="menu__list-link" href="#subscription-options">Подписка на журнал</a>
+              </li>
+            </ul>
+          </nav>
+          <div class="tel">
+            <img class="tel__img" src="images/tel-icon.svg" alt="телефон" />
+            <div class="tel__info">
+              <a class="tel__info-namber" href="tel:+73432882505">+7 (343) 288-25-05</a>
+            </div>
+          </div>
+          <button class="mob-menu__btn"><img class="mob-menu__img" src="images/mob-menu.svg"
+              alt="картинка меню"></button>
+        </div>
+      </div>
+    </div>
+    <div class="header__content">
+      <div class="container">
+        <div class="header__content-text">
+          <h1 class="title-h1 header__title">Информационная поддержка бизнеса с 1991 года!</h1>
+          <p class="header__content-title">
+            Наш журнал для бухгалтерии и бизнеса — ваш идеальный компаньон в
+            мире законов. Присоединяйтесь к нам прямо сейчас и откройте двери
+            в мир безграничных возможностей!
+          </p>
+        </div>
+        <div class="header__content-img">
+          <img class="header__content-image" src="images/header-illustration.svg" alt="иллюстрация" />
+        </div>
+        <div class="buttons">
+          <button class="btn-v1 btn-v1__margin" onclick="window.location.href='#subscription-options';">Оформить
+            подписку</button>
+          <button class="btn-v2"
+            onclick="window.open('https://ab-express.ru/wp-content/uploads/2023/11/AE_46_23.pdf', '_blank');">Полистать
+            журнал</button>
+        </div>
+      </div>
+    </div>
+    <div class="mob-menu">
+      <div class="mob-menu__inner">
+        <div class="mob-menu__top">
+          <a class="mob-menu__logo" href="#">
+            <img class="mob-menu__img-logo" src="images/logo.jpg" alt="логотип" />
+          </a>
+          <button class="mob-menu__btn2"><img class="mob-menu__img2" src="images/mob-menu-exit.svg"
+              alt="картинка выхода из меню"></button>
+        </div>
+        <nav class="mob-menu__menu">
+          <ul class="mob-menu__list">
+            <li class="mob-menu__list-item">
+              <a class="mob-menu__list-link" href="https://ab-express.ru/about/">О журнале</a>
+            </li>
+            <li class="mob-menu__list-item">
+              <a class="mob-menu__list-link" href="https://ab-express.ru/arhiv-nomerov/">Бюллетень</a>
+            </li>
+            <li class="mob-menu__list-item">
+              <a class="mob-menu__list-link" href="https://ab-express.ru/formy-dokumentov/">Формы документов</a>
+            </li>
+            <li class="mob-menu__list-item">
+              <a class="mob-menu__list-link" href="https://ab-express.ru/kalkulyatory/">Калькуляторы</a>
+            </li>
+            <li class="mob-menu__list-item">
+              <a class="mob-menu__list-link" href="https://ab-express.ru/contacts/">Контакты</a>
+            </li>
+            <li class="mob-menu__list-item">
+              <a class="mob-menu__list-link" href="#subscription-options">Подписка на журнал</a>
+            </li>
+          </ul>
+        </nav>
+        <div class="mob-menu__tel">
+          <img class="mob-menu__tel-img" src="images/tel-icon.svg" alt="телефон" />
+          <div class="mob-menu__tel-info">
+            <a class="mob-menu__tel-info-namber" href="tel:+73432882505">+7 (343) 288-25-05</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="articles">
+    <div class="container">
+      <div class="articles-content">
+        <div class="articles-content__left">
+          <ul class="articles-list">
+            <li class="articles-list__item item-left">
+              <div class="articles-list__item-info">
+                <div class="articles-list__item-namber">01</div>
+                <img class="articles-list__item-img" src="images/articles-1.svg" alt="илюстрация новости">
+              </div>
+              <div class="articles-list__bottom">
+                <p class="articles-list__item-text">Налог на сверхприбыль: кто платит и как рассчитать</p>
+              </div>
+            </li>
+            <li class="articles-list__item item-left">
+              <div class="articles-list__item-info">
+                <div class="articles-list__item-namber">02</div>
+                <img class="articles-list__item-img" src="images/articles-2.svg" alt="илюстрация новости">
+              </div>
+              <div class="articles-list__bottom">
+                <p class="articles-list__item-text">Как грамотно отказать в приеме на работу</p>
+              </div>
+            </li>
+            <li class="articles-list__item item-left">
+              <div class="articles-list__item-info">
+                <div class="articles-list__item-namber">03</div>
+                <img class="articles-list__item-img" src="images/articles-3.svg" alt="илюстрация новости">
+              </div>
+              <div class="articles-list__bottom">
+                <p class="articles-list__item-text">В какие сроки нужно сдавать в военкомат отчеты по работникам</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+        <div class="articles-content__center">
+          <h3 class="title-h3 articles-content__center-title">Актуальные разъяснения по нововведениям законодательства
+          </h3>
+          <div class="articles-content__center-text">
+            <p class="text-articles">Формы документов с инструкциями по заполнению</p>
+            <p class="text-articles">Примеры ситуационных расчетов</p>
+            <p class="text-articles">Порядок действий в сложных ситуациях</p>
+          </div>
+        </div>
+        <div class="articles-content__right">
+          <ul class="articles-list">
+            <li class="articles-list__item item-right">
+              <div class="articles-list__item-info">
+                <div class="articles-list__item-namber">04</div>
+                <img class="articles-list__item-img" src="images/articles-4.svg" alt="илюстрация новости">
+              </div>
+              <div class="articles-list__bottom">
+                <p class="articles-list__item-text">Какие товары будут маркироваться</p>
+              </div>
+            </li>
+            <li class="articles-list__item item-right">
+              <div class="articles-list__item-info">
+                <div class="articles-list__item-namber">05</div>
+                <img class="articles-list__item-img" src="images/articles-5.svg" alt="илюстрация новости">
+              </div>
+              <div class="articles-list__bottom">
+                <p class="articles-list__item-text">Как закрыть самозанятость</p>
+              </div>
+            </li>
+            <li class="articles-list__item item-right">
+              <div class="articles-list__item-info">
+                <div class="articles-list__item-namber">06</div>
+                <img class="articles-list__item-img" src="images/articles-6.svg" alt="илюстрация новости">
+              </div>
+              <div class="articles-list__bottom">
+                <p class="articles-list__item-text">Как в бухучете отразить сервитут</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="services">
+    <div class="container">
+      <h2 class="title-h2 services__title">Электронные сервисы журнала</h2>
+      <div class="services__items">
+        <div class="services__item">
+          <div class="services__item-img">
+            <img src="images/services-1.svg" alt="илюстрация сервиса">
+          </div>
+          <h3 class="title-h3 services__title-h3">Новости онлайн</h3>
+          <p class="services__text">Последние новости налогообложения и бухгалтерского учета</p>
+        </div>
+        <div class="services__item">
+          <div class="services__item-img">
+            <img class="services__item-img" src="images/services-2.svg" alt="илюстрация сервиса">
+          </div>
+          <h3 class="title-h3 services__title-h3">Новости ИФНС</h3>
+          <p class="services__text">Последние новости налоговой службы</p>
+        </div>
+        <div class="services__item">
+          <div class="services__item-img">
+            <img class="services__item-img" src="images/services-3.svg" alt="илюстрация сервиса">
+          </div>
+          <h3 class="title-h3 services__title-h3">Неограниченные консультации аудиторов и юристов</h3>
+          <p class="services__text">Услуги входят в стоимость подписки</p>
+        </div>
+        <div class="services__item">
+          <div class="services__item-img">
+            <img class="services__item-img" src="images/services-4.svg" alt="илюстрация сервиса">
+          </div>
+          <h3 class="title-h3 services__title-h3">Расчетные программы</h3>
+          <p class="services__text">Калькуляторы бухгалтерских и кадровых расчетов</p>
+        </div>
+        <div class="services__item">
+          <div class="services__item-img">
+            <img class="services__item-img" src="images/services-5.svg" alt="илюстрация сервиса">
+          </div>
+          <h3 class="title-h3 services__title-h3">Формы документов</h3>
+          <p class="services__text">Мы размещаем актуальные формы отчетных, бухгалтерских и кадровых документов</p>
+        </div>
+        <div class="services__item">
+          <div class="services__item-img">
+            <img class="services__item-img" src="images/services-6.svg" alt="илюстрация сервиса">
+          </div>
+          <h3 class="title-h3 services__title-h3">Вебинары</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="subscription-magazine">
+    <div class="container subscription-magazine__container">
+      <h2 class="title-h2 subscription-magazine__title">Подписка на журнал «АБ-Экспресс» это:</h2>
+      <p class="subscription-magazine__text">Еженедельный свежий номер журнала, в котором:</p>
+      <ul class="list-items subscription-magazine__list-items">
+        <li class="list-item subscription-magazine__list-item">даты, которые нельзя пропустить;</li>
+        <li class="list-item subscription-magazine__list-item">ваше еженедельное повышение квалификации;</li>
+        <li class="list-item subscription-magazine__list-item">подробные разъяснения сложных вопросов учета и налогов;
+        </li>
+        <li class="list-item subscription-magazine__list-item">шаблоны документов с образцами заполнения;</li>
+        <li class="list-item subscription-magazine__list-item">примеры расчетов, проводок, хозяйственных ситуаций;</li>
+        <li class="list-item subscription-magazine__list-item">советы по ведению учета со ссылками на правовую базу</li>
+      </ul>
+      <div class="subscription-magazine__facts-items">
+        <div class="subscription-magazine__facts-item">
+          <p class="subscription-magazine__facts-text">Еженедельно <span>рассылка актуальных новостей и важных
+              изменений,</span> только то,
+            что пригодится вам в работе!</p>
+          <p class="subscription-magazine__facts-text">Ответ на <span>официальном бланке,</span> с которым можно пойти в
+            суд</p>
+        </div>
+        <div class="subscription-magazine__facts-item">
+          <p class="subscription-magazine__facts-text">Возможность <span>неограниченного бесплатного письменного
+              консультирования</span>
+            у аудиторов «Интерком-Аудит Екатеринбург» и юристов компании «ЮС КОГЕНС»</p>
+          <p class="subscription-magazine__facts-text">Доступ к <span>15 сервисам</span> обновлённого сайта
+            www.ab-express.ru</p>
+        </div>
+      </div>
+      <div class="buttons subscription-magazine__buttons">
+        <button class="btn-v1 btn-v1__margin2 subscription-magazine__button"
+          onclick="window.location.href='#subscription-options';">Оформить подписку</button>
+        <button class="btn-v2 subscription-magazine__button"
+          onclick="window.open('https://ab-express.ru/wp-content/uploads/2023/11/AE_46_23.pdf', '_blank');">Полистать
+          журнал</button>
+      </div>
+      <div class="subscription-magazine__img">
+        <img src="images/journal.png" alt="журнал" />
+      </div>
+    </div>
+
+    <div id="notification-container"></div>
+    <div class="container">
+      <div class="contact-form">
+        <h2 class="contact-form__title">Вы можете подписаться на любой период.</h2>
+        <h2 class="contact-form__title">Оставьте заявку, а мы перезвоним Вам в течение 5 минут</h2>
+        <form class="contact-form__form" id="telegram-form" method="post">
+          <input class="contact-form__input form-input" type="text" id="name" name="name" placeholder="Введите ваше имя"
+            required>
+          <input class="contact-form__input form-input" type="tel" id="phone" name="phone"
+            placeholder="Введите номер телефона" required>
+          <button class="btn-v3 contact-form__button" type="submit">Получить консультацию</button>
+        </form>
+        <div id="notification-container"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="billuten">
+    <div class="container billuten__container">
+      <div class="billuten__img-box">
+        <img class="billuten__illustration" src="images/billuten-illustration.svg" alt="иллюстрация">
+        <img class="billuten__img" src="images/billuten.jpg" alt="биллютень">
+      </div>
+      <div class="billuten-info">
+        <div class="billuten-info__title title-h2">Бюллетень</div>
+        <p class="billuten-info__subtitle">Бесплатное печатное приложение к журналу, <br>
+          выходит – 1 раз в месяц, помощник в мире законов, в котором:</p>
+        <div class="billuten-info__list-text">
+          <ul class="list-items billuten__list-items">
+            <li class="list-item billuten__list-item">разъясняем как вести себя в арбитраже без юриста;</li>
+            <li class="list-item billuten__list-item">публикуем для вас судебные решения <br>
+              в области налогов и корпоративного права;</li>
+            <li class="list-item billuten__list-item">комментируем понятным языком самые <br>злободневные законы</li>
+          </ul>
+        </div>
+        <div class="billuten-info__buttons">
+          <button class="btn-v1 btn-v1__margin3 billuten-info__button"
+            onclick="window.location.href='#subscription-options';">Оформить подписку</button>
+          <button class="btn-v2 billuten-info__button"
+            onclick="window.open('https://ab-express.ru/wp-content/uploads/2023/11/Bulletin_1038.pdf', '_blank');">Полистать
+            бюллетень</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="subscription-options" id="subscription-options">
+    <div class="container">
+      <h2 class="title-h2 subscription-options__title">Варианты подписки</h2>
+      <p class="subscription-options__ssubtitle">
+        <span>Проверенная и оперативная информация</span> журнала«АБ-Экспресс» поможет Вам не допустить ошибок в это
+        непростое время! Вместе мы будем уверены в завтрашнем дне! А в работе мы <span>всегда поможем и будем
+          рядом!</span>
+      </p>
+      <p class="subscription-options__ssubtitle">
+        Месяц подписки в подарок! <br>
+        Дарим календарь бухгалтера на 2024 год
+      </p>
+      <div class="subscription-options__items">
+        <div class="subscription-options__item">
+          <div class="subscription-options__info">
+            <img class="subscription-options__img" src="images/subscription-img1.png" alt="иллюстрация">
+            <div class="subscription-options__info-text">
+              <h3 class="title-h3 subscription-options__title-h3">Электронный журнал</h3>
+              <p class="subscription-options__price">4495 ₽ <span>/ 6 месяцев</span></p>
+              <img class="subscription-options__img-mob" src="images/subscription-img1.png" alt="иллюстрация">
+              <div class="subscription-options__list">
+                <ul class="list-items">
+                  <li class="list-item subscription-options__list-item">Журнал в электронном формате</li>
+                  <li class="list-item subscription-options__list-item">Бесплатные консультации аудиторов и юристов</li>
+                  <li class="list-item subscription-options__list-item">Информационная рассылка</li>
+                  <li class="list-item subscription-options__list-item">Доступ к сервисам сайта</li>
+                  <li class="list-item subscription-options__list-item">Календарь бухгалтера 2024</li>
+                  <li class="list-item subscription-options__list-item">Электронное приложение – Бюллетень</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="subscription-options__buttons">
+            <button class="btn-v1 subscription-options__button"
+              onclick="window.open('https://ab-express.ru/wp-content/uploads/2024/01/Schet-IV-1-2024-Aktsiya-6-5.pdf', '_blank');">Распечатать
+              счёт</button>
+            <button class="btn-v2 subscription-options__button"
+              onclick="window.open('https://securecardpayment.ru/sc/erFSqvzJoEJorbiE', '_blank');">Оплатить
+              картой</button>
+          </div>
+        </div>
+        <div class="subscription-options__item">
+          <div class="subscription-options__info">
+            <img class="subscription-options__img" src="images/subscription-img2.png" alt="иллюстрация">
+            <div class="subscription-options__info-text">
+              <h3 class="title-h3 subscription-options__title-h3">Печатный журнал</h3>
+              <p class="subscription-options__price">7080 ₽ <span>/6 месяцев</span></p>
+              <img class="subscription-options__img-mob" src="images/subscription-img2.png" alt="иллюстрация">
+              <div class="subscription-options__list">
+                <ul class="list-items">
+                  <li class="list-item subscription-options__list-item">Журнал в печатном и электронном формате</li>
+                  <li class="list-item subscription-options__list-item">Бесплатные консультации аудиторов и юристов</li>
+                  <li class="list-item subscription-options__list-item">Информационная рассылка</li>
+                  <li class="list-item subscription-options__list-item">Доступ к сервисам сайта</li>
+                  <li class="list-item subscription-options__list-item">Календарь бухгалтера 2024</li>
+                  <li class="list-item subscription-options__list-item">Электронное приложение – Бюллетень</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="subscription-options__buttons">
+            <button class="btn-v1 subscription-options__button"
+              onclick="window.open('https://ab-express.ru/wp-content/uploads/2024/01/Schet-PV-1-2024-Aktsiya-6-5.pdf', '_blank');">Распечатать
+              счёт</button>
+            <button class="btn-v2 subscription-options__button"
+              onclick="window.open('https://securecardpayment.ru/sc/BUmMKQHKjPvUOddr', '_blank');">Оплатить
+              картой</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="slider">
+    <div class="container">
+      <h2 class="title-h2 slider__title">Нам доверяют</h2>
+      <div class="slider__items">
+        <div class="slider__item">
+          <img class="slider__img" src="images/slider-img/image1.png" alt="картинка слайдера">
+        </div>
+        <div class="slider__item">
+          <img class="slider__img" src="images/slider-img/image2.png" alt="картинка слайдера">
+        </div>
+        <div class="slider__item">
+          <img class="slider__img" src="images/slider-img/image3.png" alt="картинка слайдера">
+        </div>
+        <div class="slider__item">
+          <img class="slider__img" src="images/slider-img/image4.png" alt="картинка слайдера">
+        </div>
+        <div class="slider__item">
+          <img class="slider__img" src="images/slider-img/image5.png" alt="картинка слайдера">
+        </div>
+        <div class="slider__item">
+          <img class="slider__img" src="images/slider-img/image6.jpg" alt="картинка слайдера">
+        </div>
+        <div class="slider__item">
+          <img class="slider__img" src="images/slider-img/image7.jpg" alt="картинка слайдера">
+        </div>
+        <div class="slider__item">
+          <img class="slider__img" src="images/slider-img/image8.png" alt="картинка слайдера">
+        </div>
+        <div class="slider__item">
+          <img class="slider__img" src="images/slider-img/image9.jpg" alt="картинка слайдера">
+        </div>
+        <div class="slider__item">
+          <img class="slider__img" src="images/slider-img/image10.jpg" alt="картинка слайдера">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="making-subscription">
+    <div class="container">
+      <div class="making-subscription__box">
+        <div class="making-subscription__info">
+          <h2 class="title-h2 making-subscription__title">Подпишитесь на рассылку<br> и получите дополнительный подарок
+          </h2>
+          <p class="making-subscription__subtitle">Получайте полезные подборки материалов (новости, разбор сложных
+            ситуаций), которые помогут Вам успешно работать</p>
+          <form class="making-subscription__form"
+            action="/wp-content/themes/twentytwelve-child/subscription-page/subscribe.php" method="post">
+            <input class="making-subscription__input form-input" type="text" id="email" name="email" placeholder="Email"
+              required>
+              <button class="btn-v3 making-subscription__button" type="submit" id="subscription-form-submit">Подписаться</button>
+          </form>
+        </div>
+        <img class="making-subscription__img" src="images/making-subscription-img.svg" alt="иллюстрация">
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer__info">
+        <a class="footer__logo" href="#"><img src="images/logo-footer.png" alt="логотип"></a>
+        <div class="footer__links">
+          <div class="footer__item">
+            <a class="footer__link" target="_blank" href="https://ab-express.ru/about/">О журнале</a>
+            <a class="footer__link" target="_blank" href="https://ab-express.ru/arch/">Архив номеров</a>
+          </div>
+          <div class="footer__item">
+            <a class="footer__link" target="_blank" href="https://ab-express.ru/arhiv-nomerov/">Бюллетень</a>
+            <a class="footer__link" target="_blank" href="https://ab-express.ru/formy-dokumentov/">Формы документов</a>
+          </div>
+          <div class="footer__item">
+            <a class="footer__link" target="_blank" href="https://ab-express.ru/normativnye-dokumenty/">Нормативные
+              документы</a>
+            <a class="footer__link" target="_blank" href="https://ab-express.ru/kalkulyatory/">Калькуляторы</a>
+          </div>
+          <div class="footer__item">
+            <a class="footer__link" target="_blank" href="https://ab-express.ru/contacts/">Контакты</a>
+            <a class="footer__link" href="#subscription-options">Подписка нажурнал</a>
+          </div>
+        </div>
+        <div class="footer__social-networks">
+          <a class="footer__social-network" target="_blank" href="https://vk.com/journal_dlya_nalogoplatelshchika"><svg
+              xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 40 40" fill="none">
+              <path
+                d="M20 0C16.0444 0 12.1776 1.17298 8.8886 3.37061C5.59962 5.56823 3.03617 8.69181 1.52242 12.3463C0.00866575 16.0009 -0.387401 20.0222 0.384303 23.9018C1.15601 27.7814 3.06082 31.3451 5.85787 34.1421C8.65492 36.9392 12.2186 38.844 16.0982 39.6157C19.9778 40.3874 23.9991 39.9913 27.6537 38.4776C31.3082 36.9638 34.4318 34.4004 36.6294 31.1114C38.827 27.8224 40 23.9556 40 20C40 14.6957 37.8929 9.60859 34.1421 5.85786C30.3914 2.10714 25.3043 0 20 0ZM31.5273 27.8273C30.9455 27.9091 28.1 27.8273 27.9523 27.8273C27.2167 27.8369 26.507 27.556 25.9773 27.0455C25.3773 26.4659 24.8409 25.8295 24.2545 25.2273C24.0818 25.0424 23.894 24.8721 23.6932 24.7182C23.225 24.3591 22.7614 24.4386 22.5409 24.9932C22.3688 25.59 22.2486 26.2006 22.1818 26.8182C22.1432 27.3773 21.7886 27.7273 21.1614 27.7659C20.7727 27.7864 20.3841 27.7955 20 27.7841C18.6001 27.7764 17.222 27.436 15.9795 26.7909C14.6348 26.0423 13.4631 25.0185 12.5409 23.7864C11.025 21.85 9.81364 19.7227 8.73182 17.5295C8.67501 17.4182 7.56592 15.0591 7.53864 14.9477C7.43864 14.5773 7.53864 14.2205 7.84546 14.0955C8.04092 14.0205 11.6955 14.0955 11.7568 14.0955C12.0287 14.0936 12.2941 14.1783 12.5148 14.3372C12.7354 14.4961 12.8997 14.7211 12.9841 14.9795C13.6603 16.7091 14.5852 18.3307 15.7296 19.7932C15.8899 19.988 16.0774 20.1587 16.2864 20.3C16.5841 20.5045 16.8659 20.4341 16.9886 20.0886C17.1343 19.6125 17.2198 19.1201 17.2432 18.6227C17.2636 17.6364 17.2432 16.9886 17.1886 16.0023C17.1523 15.3705 16.9296 14.8182 15.9977 14.6386C15.7114 14.5864 15.6864 14.35 15.8705 14.1136C16.2546 13.625 16.7796 13.5455 17.3682 13.5159C18.2455 13.4659 19.1227 13.5 20 13.5159H20.1909C20.5727 13.5145 20.9536 13.5534 21.3273 13.6318C21.5483 13.6769 21.749 13.7922 21.8992 13.9605C22.0495 14.1288 22.1415 14.3412 22.1614 14.5659C22.2065 14.8148 22.2255 15.0676 22.2182 15.3205C22.1955 16.3955 22.1432 17.4727 22.1318 18.5477C22.1213 18.9743 22.1601 19.4006 22.2477 19.8182C22.3727 20.3909 22.7659 20.5341 23.1568 20.1205C23.6634 19.5869 24.1277 19.0147 24.5455 18.4091C25.2859 17.3052 25.896 16.1192 26.3636 14.875C26.6182 14.2364 26.8182 14.0955 27.5 14.0955H31.3773C31.6078 14.0914 31.8377 14.1221 32.0591 14.1864C32.1375 14.207 32.2107 14.2435 32.2743 14.2937C32.3379 14.344 32.3905 14.4068 32.4287 14.4783C32.4668 14.5497 32.4899 14.6283 32.4963 14.7091C32.5027 14.7899 32.4924 14.8711 32.4659 14.9477C32.275 15.7977 31.8159 16.5227 31.3295 17.2205C30.5409 18.3364 29.7091 19.425 28.9023 20.5273C28.8052 20.6698 28.7164 20.8177 28.6364 20.9704C28.3318 21.5205 28.3545 21.8273 28.7955 22.2818C29.5 23.0068 30.2523 23.6841 30.9318 24.4295C31.4302 24.9719 31.8804 25.5567 32.2773 26.1773C32.7614 26.9591 32.4545 27.6954 31.5273 27.8273Z"
+                fill="white" fill-opacity="0.24" />
+            </svg></a>
+          <a class="footer__social-network-2" target="_blank"
+            href="https://dzen.ru/abexpress?utm_referrer=ab-express.ru"><svg fill="#FFFFFF" fill-opacity="0.24"
+              viewBox="0 0 50 50" width="40px" height="40px">
+              <path
+                d="M46.894 23.986c.004 0 .007 0 .011 0 .279 0 .545-.117.734-.322.192-.208.287-.487.262-.769C46.897 11.852 38.154 3.106 27.11 2.1c-.28-.022-.562.069-.77.262-.208.192-.324.463-.321.746C26.193 17.784 28.129 23.781 46.894 23.986zM46.894 26.014c-18.765.205-20.7 6.202-20.874 20.878-.003.283.113.554.321.746.186.171.429.266.679.266.03 0 .061-.001.091-.004 11.044-1.006 19.787-9.751 20.79-20.795.025-.282-.069-.561-.262-.769C47.446 26.128 47.177 26.025 46.894 26.014zM22.823 2.105C11.814 3.14 3.099 11.884 2.1 22.897c-.025.282.069.561.262.769.189.205.456.321.734.321.004 0 .008 0 .012 0 18.703-.215 20.634-6.209 20.81-20.875.003-.283-.114-.555-.322-.747C23.386 2.173 23.105 2.079 22.823 2.105zM3.107 26.013c-.311-.035-.555.113-.746.321-.192.208-.287.487-.262.769.999 11.013 9.715 19.757 20.724 20.792.031.003.063.004.094.004.25 0 .492-.094.678-.265.208-.192.325-.464.322-.747C23.741 32.222 21.811 26.228 3.107 26.013z" />
+            </svg>
+            </svg></a>
+        </div>
+      </div>
+      <p class="footer__text">© 2010-2023 «АБ-Экспресс»</p>
+    </div>
+  </footer>
+  <script src="js/main.min.js"></script>
+  <!-- Yandex.Metrika counter -->
+  <script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+    m[i].l=1*new Date();
+    for (var j = 0; j < document.scripts.length; j++) {if (document.scripts[j].src === r) { return; }}
+    k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(64684504, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+    });
+  </script>
+  <noscript><div><img src="https://mc.yandex.ru/watch/64684504" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+  <!-- /Yandex.Metrika counter -->
+</body>
+
+</html>

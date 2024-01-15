@@ -1,0 +1,65 @@
+<div>{{ new_section }}</div>
+<script type="text/javascript">
+    let ready = (callback) => {
+        if (document.readyState !== 'loading')
+        {
+            callback();
+        } else
+        {
+            document.addEventListener("DOMContentLoaded", callback);
+        }
+    };
+
+    ready(() => {
+        let itemsCount = 10;
+
+        let buttons = document.querySelectorAll('button.sect_del');
+        if (buttons !== null)
+        {
+            buttons.forEach(function (item) {
+                item.addEventListener('click', function (e) {
+                        let btn = e.target;
+                        let div = document.querySelector('div#sect_list_' + btn.dataset.id);
+                        if (div != null)
+                        {
+                            div.remove();
+                        }
+                    }
+                );
+            });
+        }
+
+        let addBtn = document.querySelector('button#add_sect');
+
+        if (addBtn !== null)
+        {
+            addBtn.addEventListener('click', function (e) {
+
+                let newSectionElement = document.querySelector('div#sect_template').cloneNode(true);
+                if(newSectionElement !== null)
+                {
+                    newSectionElement.id = 'sect_list_' + itemsCount.toString();
+                    let buttonDel = newSectionElement.querySelector('button');
+                    if(buttonDel != null)
+                    {
+                        buttonDel.addEventListener('click', function (e) {
+                            let btn = e.target;
+                            let div = document.querySelector('div#sect_list_' + btn.dataset.id);
+                            if (div != null)
+                            {
+                                div.remove();
+                            }
+                        });
+
+                        buttonDel.dataset.id = (itemsCount++).toString();
+                    }
+                    
+                    let sections = document.querySelector('div#sections_list');
+                    sections.appendChild(newSectionElement);
+                    newSectionElement.style.display = 'block';
+                }
+            });
+        }
+
+    });
+</script>

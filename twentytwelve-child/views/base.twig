@@ -1,0 +1,99 @@
+<div class="center-block site-content-right">
+	<div class="breadcrumbs">
+		{{ breadcrumbs }}
+	</div>
+	<main role="main"> {% block message %}{% endblock %}
+
+		<h1>{{ post.title }}</h1>
+
+
+		{% block subpages %}
+			{% if subpages %}
+				<ul class="page-sections">
+					{% for page in subpages %}
+						<li class="formdoc">
+							<a href="{{ page.link }}">{{ page.subpage.post_title }}
+
+								<br>
+
+								<!--							{{ wp.get_field('pab_date') }}-->
+							</a>
+
+						</li>
+					{% endfor %}
+				</ul>
+
+			{% endif %}
+
+
+		{% endblock %}
+
+		<!--
+																																				
+																																				-->
+
+		{% block content %}
+
+
+			<hr style="border-bottom: 1px solid #006ab4; margin:5px 0 15px 0;">
+			<div class="static-content">
+
+				{% if reg_only %}
+					{% if access == "unauthed" %}
+						<div class="reg-enter">
+							<p>Данный раздел/документ открыт только зарегистрированным пользователям.<br>
+								<a href="/podpiska-na-zhurnal/">Оформите подписку</a>
+								или
+								                                            войдите под вашей учетной записью</p>
+						</div>
+
+
+						{{ function('do_shortcode', '[authentication]') }}
+
+						<div class="after-reg">
+
+							<h4>Уважаемые посетители!</h4>
+
+							После регистрации на нашем сайте вам будут доступны следующие сервисы:
+
+							<ul>
+								<li>Возможность просматривать эксклюзивные материалы журнала, которые нигде не публиковались;</li>
+								<li>Возможность просматривать материалы журнала до появления бумажной версии;</li>
+								<li>Возможность подписки на новости.</li>
+							</ul>
+
+						</div>
+
+
+					{% endif %}
+
+					{% if access == "denied" %}
+						<div class="reg-enter">
+							<p>Данный раздел/документ открыт только зарегистрированным пользователям.<br/>
+								<a href="/podpiska-na-zhurnal/">Оформите подписку</a>
+								или войдите под вашей учетной записью</p>
+						</div>
+					{% endif %}
+
+					{% if access == "accepted" %}
+						{{ post.content }}
+					{% endif %}
+				{% else %}
+					{{ post.content }}
+				{% endif %}
+
+
+				{# {% if limitation is empty %}
+																																																	{{ post.content }}
+																																																	{% if form %}
+																																																		{% include ['part/forms/'~form~'.twig'] %}
+																																																	{% endif %}
+																																																{% else %}
+																																																	{% include [''~limitation_form~''] %}
+																																																{% endif %} #}
+
+			</div>
+		{% endblock %}
+
+	</main>
+</div>

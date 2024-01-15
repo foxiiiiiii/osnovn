@@ -1,0 +1,21 @@
+<div class="center-block site-content-right">
+    <main role="main">
+
+        <h1>Поиск по сайту</h1>
+
+        <div class="static-content">
+            <div>{{ searchform }}</div>
+            {% for result in results %}
+                <div>
+                    <h3><a href="{{ result.link }}">{{ result.title }}</a></h3>
+                    <div>
+                        {{ result.content | excerpt(30) }}
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+
+
+    </main>
+</div>

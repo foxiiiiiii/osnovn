@@ -1,0 +1,7 @@
+{% extends "base.twig" %}
+
+{% block message %}
+	{% if flash_message is not empty %}
+		<div class="alert alert-info" role="alert">{{ flash_message }}</div>
+	{% endif %}
+{% endblock %}

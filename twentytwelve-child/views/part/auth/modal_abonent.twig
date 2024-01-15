@@ -1,0 +1,147 @@
+<style>
+    .abonent__wrapper {
+        display: none;
+        position: fixed;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        align-items: center;
+        justify-content: center;
+        background-color: #000000e6;
+        z-index: 5;
+    }
+    .abonent--show {
+        display: flex;
+    }
+    .abonent {
+        border: 4px solid #9ab8c9;
+        padding: 12px;
+        background-color: #fff;
+        max-width: 590px;
+        text-align: center;
+        border-radius: 12px;
+    }
+    .abonent__logo {
+        max-width: 125px;
+        margin-top: -15%;
+        margin-left: auto;
+        margin-right: auto;
+        display: block;
+        margin-bottom: 20px;
+    }
+    .abonent__title {
+        font-size: 22px;
+        line-height: 1.5;
+        font-weight: 900;
+        margin: 0 0 5px;
+    }
+    .abonent__columns {
+        display: flex;
+        gap: 20px;
+        max-width: 450px;
+        margin: 0 auto;
+    }
+    .abonent__column {
+        flex: 1;
+        font-size: 14px;
+        line-height: 1.5;
+        font-weight: 400;
+        margin: 12px 0;
+    }
+
+    .abonent__column .abonent__btn,
+    .abonent__column button {
+        width: 100%;
+        padding: 18px 15px;
+        font-family: Roboto, sans-serif;
+        font-size: 18px;
+        line-height: 1;
+        font-weight: 700;
+        color: #fff;
+        outline: none;
+        cursor: pointer;
+        border: none;
+        background: #006AB6;
+        border-radius: 3px;
+        transition: all .3s;
+        margin-bottom: 15px;
+    }
+
+    .abonent__column input {
+        width: 100%;
+        padding: 14px 15px;
+        font-family: Roboto, sans-serif;
+        font-size: 17px;
+        line-height: 1;
+        font-weight: 400;
+        color: #000000;
+        margin: 0 0 18px;
+        outline: none;
+        border: 1px solid #dadada;
+        border-radius: 3px;
+        background-color: #ededed;
+        height: auto;
+        box-shadow: none;
+    }
+
+    .abonent__column .btn {
+        width: 100%;
+    }
+
+    .abonent__column .btn--red {
+        background-color: #982622;
+        border: 1px solid #680e0b;
+    }
+</style>
+
+<div class="js-abonent-stop-scroll"></div>
+<div class="abonent__wrapper">
+    <div class="abonent">
+        <div class="abonent__content">
+            <img src="https://ab-express.ru/wp-content/uploads/2022/12/logo-krugloe-300x279.png" class="abonent__logo">
+            <h3 class="abonent__title">{{ title }}</h3>
+            {{ instruction }}
+
+            <div class="abonent__columns">
+                <div class="abonent__column">
+                    <a href="/probnaya-podpiska/" class="btn abonent__btn btn--red">Зарегистрироваться</a>
+                    {% include '/part/auth/not_auth.twig' with {'only_form': true, 'auth_login': error} %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    const abonentStopElement = document.querySelector('.js-abonent-stop-scroll');
+    const abonentModalElement = document.querySelector('.abonent__wrapper');
+    const abonentTimeoutThisPage = () => {
+        if (!abonentModalElement.classList.contains('abonent--show')) {
+            abonentModalElement.classList.add('abonent--show');
+            document.documentElement.style.overflow = 'hidden';
+            localStorage.setItem("viewModal", "true");
+        }
+    };
+    let timeout = setTimeout(abonentTimeoutThisPage, 1000*10);
+
+    if (localStorage.getItem('viewModal')) {
+        abonentTimeoutThisPage();
+    }
+    // const observer = new IntersectionObserver((entries) => {
+    //     entries.forEach((entry) => {
+    //         if (entry.isIntersecting) {
+    //             abonentTimeoutThisPage();
+    //             clearTimeout(abonentTimeoutThisPage);
+    //         } else {
+    //             abonentModalElement.classList.remove('abonent--show');
+    //             timeout = setTimeout(abonentTimeoutThisPage, 1000*10);
+    //         }
+    //     });
+    // }, {
+    //     rootMargin: '200px',
+    //     threshold: 0.0
+    // });
+    // observer.observe(abonentStopElement);
+</script>
